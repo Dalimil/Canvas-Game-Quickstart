@@ -1,8 +1,8 @@
 # Canvas JavaScript Game Quickstart
 
 ## TODO
-- Experiment with main.js
 - restructure assets
-- Use CSS for UI
+- Use Box2D
 - Use multiple canvases (layers)
+- Use CSS for UI
 - try browserify - https://github.com/substack/node-browserify
