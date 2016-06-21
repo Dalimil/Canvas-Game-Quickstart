@@ -1,6 +1,6 @@
 # Canvas JavaScript Game Quickstart
 
-**Template for JavaScript games (or animations) using HTML5 Canvas**
+**This is a template for JavaScript games (or animations) using HTML5 Canvas**
 
 ## TODO
 - restructure assets
