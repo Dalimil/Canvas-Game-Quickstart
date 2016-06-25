@@ -1,4 +1,8 @@
-var GameManager = (function() {
+var GameManager = (function(canvas) {
+
+    var width = canvas.width;
+    var height = canvas.height;
+    var ctx = canvas.getContext("2d");
 
 	// Update game objects.
     function update(dt) { // dt = time passed since last redraw
@@ -12,8 +16,7 @@ var GameManager = (function() {
 
     // Draw everything
     function render() {
-        ctx.fillStyle = 'black';
-        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        ShapeDrawing.drawRectangles(ctx);
     }
 
 	return {
@@ -21,4 +24,4 @@ var GameManager = (function() {
 		render: render
 	};
 
-})();
+}); // To be initialized with canvas in init.js

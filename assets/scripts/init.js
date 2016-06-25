@@ -2,6 +2,8 @@
 * Initializes the game loop and pause/unpause events
 */
 window.onload = function() {
+    // First initialize GameManager by passing the canvas object
+    GameManager = GameManager(document.getElementById("canvas")); 
 
     // A cross-browser requestAnimationFrame
     var requestAnimFrame = (function() {
@@ -50,8 +52,8 @@ window.onload = function() {
         var currentTime = Date.now();
         var dt = currentTime - previousTime;
 
-        Game.update(dt);
-        Game.render();
+        GameManager.update(dt);
+        GameManager.render();
 
         previousTime = currentTime;
         requestAnimFrame(main);
