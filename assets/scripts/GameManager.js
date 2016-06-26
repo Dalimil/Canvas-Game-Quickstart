@@ -16,6 +16,10 @@ var GameManager = (function(canvas) {
 
     // Draw everything
     function render() {
+        // Clear canvas
+        ctx.clearRect(0, 0, width, height);
+        
+        // Draw objects
         ShapeDrawing.drawRectangles(ctx);
         ShapeDrawing.drawArc(ctx);
         ShapeDrawing.drawText(ctx);
