@@ -17,6 +17,8 @@ var GameManager = (function(canvas) {
     // Draw everything
     function render() {
         ShapeDrawing.drawRectangles(ctx);
+        ShapeDrawing.drawArc(ctx);
+        ShapeDrawing.drawText(ctx);
     }
 
 	return {
