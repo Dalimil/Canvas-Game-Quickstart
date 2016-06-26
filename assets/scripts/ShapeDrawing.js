@@ -37,6 +37,17 @@ var ShapeDrawing = (function() {
 		ctx.strokeText("Hello world", 200, 100); // or fillText()
 	}
 
+	function drawImg(ctx) {
+		// Images would normally be pre-loaded elsewhere
+		var img = new Image();   // Create new img element
+		img.addEventListener("load", function() {
+			// execute drawImage statements here
+			ctx.drawImage(img, 50, 50); 
+			// OR to scale: drawImage(img, x, y, width, height)
+		}, false);
+		img.src = 'myImage.png'; // Set source path - image starts loading now
+	}
+
 	return {
 		drawRectangles: drawRectangles,
 		drawArc: drawArc,
