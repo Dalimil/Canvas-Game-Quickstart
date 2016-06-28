@@ -26,37 +26,35 @@ window.onload = function() {
         pause();
     });
 
-    // Let's play this game!
-    var previousTime = Date.now();
-    var running = true;
-    main();
+    var running = false;
+    var lastTimestamp;
+    unpause(); // Play now!
 
-
-    // Pause and unpause
     function pause() {
         running = false;
     }
 
     function unpause() {
         running = true;
-        previousTime = Date.now();
-        main();
+        lastTimestamp = performance.now();
+        requestAnimFrame(main);
     }
 
     // The main game loop
-    function main() {
+    // @param timestamp - DOMHighResTimeStamp
+    function main(timestamp) {
         if(!running) {
             return;
         }
 
-        var currentTime = Date.now();
-        var dt = currentTime - previousTime;
+        requestAnimFrame(main); // Best practice (Mozilla)
 
-        GameManager.update(dt);
+        var delta = timestamp - lastTimestamp;
+        lastTimestamp = timestamp; // ready for the next frame
+        
+        GameManager.update(delta);
         GameManager.render();
 
-        previousTime = currentTime;
-        requestAnimFrame(main);
     }
 
 };
