@@ -5,7 +5,8 @@
 ## TODO
 - restructure assets
 - add mouse event listeners
-- add sounds + sound control
+- add Loading screen and asset loader in init
+- add sounds + audio control
 - Use Box2D
 - Use multiple canvases (layers)
 - Use CSS for UI
