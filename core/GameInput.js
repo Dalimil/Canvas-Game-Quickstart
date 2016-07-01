@@ -1,12 +1,20 @@
 /**
-* Handles all keyboard input
+* Handles all keyboard and mouse input events
 */
 var GameInput = (function() {
 
 	var pressedKeys = {};
+	var mouseDown = [false, false];
+	var mouseCoords = [0, 0];
 
-	function setKey(event, status) {
-		var code = event.keyCode;
+	// Register observers and notify on click events
+	var observers = [];
+
+	function registerObserver(observer) {
+		observers.push(observer);
+	}
+
+	function setKey(keyCode, active) {
 		var key;
 
 		switch(code) {
@@ -22,32 +30,75 @@ var GameInput = (function() {
 				key = 'DOWN'; break;
 			default:
 				// Convert ASCII codes to letters
-				key = String.fromCharCode(event.keyCode);
+				key = String.fromCharCode(keyCode);
 		}
 
-		pressedKeys[key] = status;
+		pressedKeys[key] = active;
 	}
 
-	document.addEventListener('keydown', function(e) {
-		setKey(e, true);
+	function setMouse(mouseButton, active) {
+		// mouseButton: 1-left, 2-middle, 3-right
+		if(mouseButton == 1) {
+			mouseDown[0] = true;
+		} else if(mouseButton == 3) {
+			mouseDown[1] = true;
+		}
+
+		$.each(observers, function(index, observer) {
+			observer.notifyMouse(mouseButton, active);
+		});
+	}
+
+	$(document).keydown(function(e) {
+		setKey(e.which, true);
 	});
 
-	document.addEventListener('keyup', function(e) {
-		setKey(e, false);
+	$(document).keyup(function(e) {
+		setKey(e.which, false);
 	});
 
-	window.addEventListener('blur', function() {
+	$(window).blur(function() {
 		pressedKeys = {};
 	});
 
+	$(document).mousedown(function(e) {
+		setMouse(e.which, true);
+	});
 
-	function isDown(key) {
+	$(document).mouseup(function(e) {
+		setMouse(e.which, false);
+	});
+
+	$(document).contextmenu(function() {
+		return false; // prevent from occuring
+	});
+
+	// Mousemove
+	// TODO: register on Canvas instance and subtract offset
+	$(document).mousemove(function(e) {
+		mouseCoords[0] = e.pageX;
+		mouseCoords[1] = e.pageY;
+	});
+
+
+	function isKeyDown(key) {
 		return pressedKeys[key];
+	}
+
+	function isMouseDown() {
+		return mouseDown;
+	}
+
+	function getMouseCoords() {
+		return mouseCoords;
 	}
 	
 
 	return {
-		isDown: isDown
+		isKeyDown: isKeyDown,
+		isMouseDown: isMouseDown,
+		getMouseCoords: getMouseCoords,
+		registerObserver: registerObserver
 	};
 
 })();

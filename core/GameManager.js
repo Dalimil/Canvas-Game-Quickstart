@@ -1,13 +1,19 @@
-var GameManager = (function(canvas) {
+var GameManager = (function() {
 
-    var width = canvas.width;
-    var height = canvas.height;
-    var ctx = canvas.getContext("2d");
+    var width;
+    var height;
+    var ctx;
+
+    function init(canvas) {
+        width = canvas.width;
+        height = canvas.height;
+        ctx = canvas.getContext("2d");
+    }
 
 	// Update game objects.
     function update(dt) { // dt = time passed since last redraw
         
-        if(GameInput.isDown('RIGHT')) { // detect which keys are down.
+        if(GameInput.isKeyDown('RIGHT')) { // detect which keys are down.
             // dt is the number of seconds passed, so multiplying by
             // the speed gives you the number of pixels to move
             // player.x += playerSpeed * dt;
@@ -26,8 +32,9 @@ var GameManager = (function(canvas) {
     }
 
 	return {
+        init: init
 		update: update,
 		render: render
 	};
 
-}); // To be initialized with canvas in init.js
+})(); // To be initialized with canvas in init.js

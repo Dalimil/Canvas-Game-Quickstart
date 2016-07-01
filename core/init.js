@@ -3,7 +3,8 @@
 */
 window.onload = function() {
     // First initialize GameManager by passing the canvas object
-    GameManager = GameManager(document.getElementById("canvas")); 
+    var canvas = $("#canvas")[0];
+    GameManager.init(canvas);
 
     // A cross-browser requestAnimationFrame
     var requestAnimFrame = (function() {
@@ -18,11 +19,11 @@ window.onload = function() {
     })();
 
     // Don't run the game when the tab isn't visible
-    window.addEventListener('focus', function() {
+    $(window).on("focus", function() {
         unpause();
     });
 
-    window.addEventListener('blur', function() {
+    $(window).on("blur", function() {
         pause();
     });
 
