@@ -24,15 +24,22 @@ var GameManager = (function() {
     function render() {
         // Clear canvas
         ctx.clearRect(0, 0, width, height);
-        
+        ctx.save(); // save to reset state at the end
+
         // Draw objects
         ShapeDrawing.drawRectangles(ctx);
         ShapeDrawing.drawArc(ctx);
         ShapeDrawing.drawText(ctx);
+
+        var mouseCoords = GameInput.getMouseCoords();
+        ctx.font = "12px sans";
+        ctx.fillText(mouseCoords[0] + ";" + mouseCoords[1], mouseCoords[0] + 10, mouseCoords[1]);
+
+        ctx.restore(); // reset styles again
     }
 
 	return {
-        init: init
+        init: init,
 		update: update,
 		render: render
 	};

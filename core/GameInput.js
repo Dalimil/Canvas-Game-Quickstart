@@ -6,6 +6,7 @@ var GameInput = (function() {
 	var pressedKeys = {};
 	var mouseDown = [false, false];
 	var mouseCoords = [0, 0];
+	var offset = null;
 
 	// Register observers and notify on click events
 	var observers = [];
@@ -14,10 +15,22 @@ var GameInput = (function() {
 		observers.push(observer);
 	}
 
+	function init($canvas) {
+		offset = $canvas.offset();
+		offset.left = Math.round(offset.left);
+		offset.top = Math.round(offset.top);
+
+		// Mousemove
+		$canvas.mousemove(function(e) {
+			mouseCoords[0] = e.pageX - offset.left;
+			mouseCoords[1] = e.pageY - offset.top;
+		});
+	}
+
 	function setKey(keyCode, active) {
 		var key;
 
-		switch(code) {
+		switch(keyCode) {
 			case 32:
 				key = 'SPACE'; break;
 			case 37:
@@ -73,13 +86,6 @@ var GameInput = (function() {
 		return false; // prevent from occuring
 	});
 
-	// Mousemove
-	// TODO: register on Canvas instance and subtract offset
-	$(document).mousemove(function(e) {
-		mouseCoords[0] = e.pageX;
-		mouseCoords[1] = e.pageY;
-	});
-
 
 	function isKeyDown(key) {
 		return pressedKeys[key];
@@ -95,6 +101,7 @@ var GameInput = (function() {
 	
 
 	return {
+		init: init,
 		isKeyDown: isKeyDown,
 		isMouseDown: isMouseDown,
 		getMouseCoords: getMouseCoords,

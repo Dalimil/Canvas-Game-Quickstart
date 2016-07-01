@@ -3,8 +3,9 @@
 */
 window.onload = function() {
     // First initialize GameManager by passing the canvas object
-    var canvas = $("#canvas")[0];
-    GameManager.init(canvas);
+    var $canvas = $("#canvas");
+    GameManager.init($canvas[0]);
+    GameInput.init($canvas);
 
     // A cross-browser requestAnimationFrame
     var requestAnimFrame = (function() {
