@@ -3,8 +3,6 @@
 **This is a template for JavaScript games (or animations) using HTML5 Canvas**
 
 ## TODO
-- [ ] restructure assets
-- [ ] add mouse event listeners
 - [ ] add Loading screen and asset loader in init
 - [ ] add sounds + audio control
 - [ ] Use Box2D
