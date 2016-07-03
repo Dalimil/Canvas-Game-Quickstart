@@ -57,7 +57,7 @@ var GameInput = (function() {
 			mouseDown[1] = true;
 		}
 
-		$.each(observers, function(index, observer) {
+		observers.forEach(function(observer) {
 			observer.notifyMouse(mouseButton, active);
 		});
 	}
