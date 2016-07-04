@@ -27,9 +27,12 @@ specialBox.jump();
 
 /* Consider 2 closure-package styles
 	1) function Thing() { var private = 42; return { doThis: doThis }; }();
-	2) function makeThing(param) { var private = 42; return { doThis: doThis }; }
-
+	2) function createThing(param) { var private = 42; return { doThis: doThis }; }
+	
+	1) Thing.doThis();
+	2) var myThing = createThing(param); myThing.doThis();
+	
 	1) <- seems better as a Singleton pattern - or 'Package'
 	2) <- is better for initializing (can param) and can have multiple instances;
-	
+
 
