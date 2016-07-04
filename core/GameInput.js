@@ -1,5 +1,6 @@
 /**
 * Handles all keyboard and mouse input events
+* Use the observer pattern for mouse click events
 */
 var GameInput = (function() {
 

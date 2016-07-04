@@ -44,4 +44,4 @@ var GameManager = (function() {
 		render: render
 	};
 
-})(); // To be initialized with canvas in init.js
+})();
