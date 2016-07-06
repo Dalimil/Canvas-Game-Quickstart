@@ -1,2 +1,3 @@
 // Movement has to be normalized (e.g. UP + RIGHT  div by sqrt(2) )
 
+// Could be further split into PlayerShooting, PlayerMovement, PlayerStats, ...
