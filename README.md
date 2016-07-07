@@ -3,10 +3,9 @@
 **This is a template for JavaScript games (or animations) using HTML5 Canvas**
 
 ## TODO
-- [ ] add Loading screen and asset loader in init
+- [ ] add Loading screen
 - [ ] add sounds + audio control
 - [ ] Implement physics engine
-- [ ] Use multiple canvases (layers)
 - [ ] Use CSS for UI
 - [ ] Try Unity Tanks tutorial (implement in Canvas) - especially Camera and 2pl controls
 - [ ] try browserify - https://github.com/substack/node-browserify

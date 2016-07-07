@@ -26,6 +26,9 @@ var GameInput = (function() {
 			mouseCoords[0] = e.pageX - offset.left;
 			mouseCoords[1] = e.pageY - offset.top;
 		});
+
+		// + all the other events
+		setupInputEvents();
 	}
 
 	function setKey(keyCode, active) {
@@ -63,29 +66,31 @@ var GameInput = (function() {
 		});
 	}
 
-	$(document).keydown(function(e) {
-		setKey(e.which, true);
-	});
+	function setupInputEvents() {
+		$(document).keydown(function(e) {
+			setKey(e.which, true);
+		});
 
-	$(document).keyup(function(e) {
-		setKey(e.which, false);
-	});
+		$(document).keyup(function(e) {
+			setKey(e.which, false);
+		});
 
-	$(window).blur(function() {
-		pressedKeys = {};
-	});
+		$(window).on("blur", function() {
+			pressedKeys = {};
+		});
 
-	$(document).mousedown(function(e) {
-		setMouse(e.which, true);
-	});
+		$(document).mousedown(function(e) {
+			setMouse(e.which, true);
+		});
 
-	$(document).mouseup(function(e) {
-		setMouse(e.which, false);
-	});
+		$(document).mouseup(function(e) {
+			setMouse(e.which, false);
+		});
 
-	$(document).contextmenu(function() {
-		return false; // prevent from occuring
-	});
+		$(document).contextmenu(function() {
+			return false; // prevent from occuring
+		});
+	}
 
 
 	function isKeyDown(key) {
