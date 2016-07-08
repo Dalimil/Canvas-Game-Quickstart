@@ -1,22 +1,27 @@
 var AssetLoader = (function() {
 	
 	var loadComponents = [];
+	var numComponentsToLoad = null;
+	var progressBarValue = 0;
 	var loaded = false;
 	var callback = null;
 	var $loadingScreen = null;
 	var $progressBar = null;
 
-	function addLoadFunction(func, description) {
+	function addLoadFunction(func) {
 		if(loaded) return;
 
-		loadComponents.push({ 
-			"f": func, 
-			"description": description 
-		});
+		// func should take 2 callbacks for done() and tick()
+		loadComponents.push({ f: func });
 	}
 
 	function setBarProgress(value) {
+		progressBarValue = value;
 		$progressBar.css("width", value + "%");
+	}
+
+	function increaseBarProgress(value) {
+		setBarProgress(Math.min(90, progressBarValue + value));
 	}
 
 	function setBarLabel(label) {
@@ -41,14 +46,22 @@ var AssetLoader = (function() {
 		$progressBar = $("#load-progress");
 		$loadingScreen.fadeIn("slow");
 		
+		numComponentsToLoad = loadComponents.length;
 		setBarProgress(10);
-		// only work with range 10 - 90
+		// Only work with the range 10 - 90
+		var portion = 80 / numComponentsToLoad;
+
+		// Fire loaders of all and start collecting (via callbacks)
 		loadComponents.forEach(function(component) {
-			setBarLabel(component.description);
-			component.f();
+			component.f(function() { // done()
+				numComponentsToLoad -= 1;
+				if(numComponentsToLoad <= 0) {
+					finishLoading();
+				}
+			}, function(piecesTotal) { // tick()
+				increaseBarProgress(portion / piecesTotal);
+			});
 		});
-		
-		finishLoading();
 	}
 
 	return {

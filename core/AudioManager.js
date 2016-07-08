@@ -1,63 +1,107 @@
 var AudioManager = (function() {
 
-	var offset = 0;
 	var audioCtx = new (window.AudioContext || window.webkitAudioContext)();
 
-	var source = audioCtx.createMediaElementSource(myAudio);
-	// Create a gain node
-	var gainNode = audioCtx.createGain();
-	gainNode.gain.value = 1; // [0, 1] - 0 is mute
+	/* Array entries will be replaced by audio buffers after load() */
+	var audioBuffers = [
+		'ambient-menu.ogg',
+		'gunshot.wav'
+	];
+	var filePrefix = 'audio/';
 
-	// connect the AudioBufferSourceNode to the gainNode
-	// and the gainNode to the destination, so we can play the
-	// music and adjust the volume dynamically
-	source.connect(gainNode);
-	gainNode.connect(audioCtx.destination);
-
-	// Add fading (linearRamp) and check out all filters on MDN
-
-
-	if (offset == 0) {
-		source.start();
-		offset = context.currentTime;
-	} else {
-		source.start(0, context.currentTime - offset);
-	}
-
-
-	function load() {
-		//
-	}
+	// Register our load function
 	AssetLoader.addLoadFunction(load);
+
+	var sourceAmbient = null;
+	var sourceGunshot = null;
+
+	var volumeEffects = 0.9;
+	var volumeAmbient = 0.7;
+
+	var gainEffects = audioCtx.createGain();
+	var gainAmbient = audioCtx.createGain();
+
+	// Set volume levels -> [0, 1] - 0 is mute
+	gainAmbient.gain.value = volumeAmbient; 
+	gainEffects.gain.value = volumeEffects;
+
+
+	function initSources() {
+		sourceAmbient = audioCtx.createBufferSource();
+		sourceAmbient.buffer = audioBuffers[0];
+		sourceAmbient.loop = true;
+		sourceAmbient.connect(gainAmbient);
+		gainAmbient.connect(audioCtx.destination);
+
+		sourceGunshot = audioCtx.createBufferSource();
+		sourceGunshot.buffer = audioBuffers[1];
+		sourceGunshot.connect(gainEffects);
+		gainEffects.connect(audioCtx.destination);
+	}
+
+	// To be initialized in load()
+	var singleBufferLoaded = function(fDone, fTick) {
+		var totalPieces = audioBuffers.length;
+		var numToLoad = totalPieces;
+
+		function self() {
+			numToLoad -= 1;
+			fTick(totalPieces);
+
+			if(numToLoad <= 0) { // All loaded
+				initSources();
+				fDone();
+			}
+		};
+
+		return self;
+	};
+
+	function load(fDone, fTick) {
+		singleBufferLoaded = singleBufferLoaded(fDone, fTick);
+
+		$.each(audioBuffers, function(index, value) {
+			loadBuffer(filePrefix + value, index);
+		});
+	}
+
+	function loadBuffer(url, index) {
+		var request = new XMLHttpRequest();
+		request.open('GET', url, true);
+		request.responseType = 'arraybuffer';
+
+		request.onload = function() {
+			audioCtx.decodeAudioData(request.response, function(buffer) {
+				audioBuffers[index] = buffer;
+				singleBufferLoaded();
+			}, function(error) { 
+				console.error("Audio data decoding error", error); 
+			});
+		};
+
+		request.send();
+	}
+
+	function playAmbient() {
+		var currentTime = audioCtx.currentTime;
+		//gainAmbient.gain.setValueAtTime(0, currentTime + 1);
+		sourceAmbient.start(currentTime + 1); // start(when, offset, duration)
+		// Fade-in volume - todo - fix
+		//gainAmbient.gain.exponentialRampToValueAtTime(volumeAmbient, currentTime + 4);
+	}
+
+	function stopAmbient() {
+		sourceAmbient.stop();
+	}
+
+	function playGunshot() {
+		sourceGunshot.start();
+	}
+
 	return {
+		playAmbient: playAmbient,
+		stopAmbient: stopAmbient,
+		playGunshot: playGunshot
 	};
 
 })();
-
-
-
-/////////////////////
-
-
-function getData() {
-  source = audioCtx.createBufferSource();
-  var request = new XMLHttpRequest();
-  request.open('GET', 'guitar.ogg', true);
-  request.responseType = 'arraybuffer';
-
-  request.onload = function() {
-    var audioData = request.response;
-
-    audioCtx.decodeAudioData(audioData, function(buffer) {
-        source.buffer = buffer;
-
-        source.connect(audioCtx.destination);
-        source.loop = true;
-      },
-
-      function(e){"Error with decoding audio data" + e.err});
-
-  }
-
-  request.send();
-}

@@ -22,6 +22,8 @@ var MainMenu = (function() {
 		$leaderboardButton.click(function() {
 			console.log("Swap menu screen here"); // todo
 		});
+
+		// TODO - uncomment - AudioManager.playAmbient();
 	}
 
 
