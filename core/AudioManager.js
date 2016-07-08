@@ -24,8 +24,12 @@ var AudioManager = (function() {
 		source.start(0, context.currentTime - offset);
 	}
 
-	return {
+
+	function load() {
 		//
+	}
+	AssetLoader.addLoadFunction(load);
+	return {
 	};
 
 })();

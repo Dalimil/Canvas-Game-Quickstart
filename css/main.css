@@ -21,7 +21,10 @@ canvas {
 #glasspane {
 	position: absolute;
 	margin-top: 0px;
-	/*display: none; */
+}
+
+#glasspane > div {
+	display: none; /* Hide all by default */
 }
 
 #glasspane .centered {
@@ -39,7 +42,8 @@ canvas {
 }
 
 #menu-wrapper {
-	background: url("../images/menu-splash.jpg");
+	background: url("../images/menu-splash.jpg"); 
+	/* TODO: this one (unlike the load-wrapper) should be preloaded in code */
 }
 
 #load-wrapper {
