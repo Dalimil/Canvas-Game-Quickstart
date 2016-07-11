@@ -4,33 +4,37 @@
  * the Vector2 as an immutable object (even though x and y can be explicitly set)
  */
 function Vector2(x, y) {
+	if(!(this instanceof Vector2)) {
+		// Called without new
+		return new Vector2(x, y);
+	}
 	this.x = (x === undefined) ? 0 : x;
 	this.y = (y === undefined) ? 0 : y;
 }
 
 // Static Constants
-Vector2.ZERO = new Vector2(0, 0);
-Vector2.ONE = new Vector2(1, 1);
-Vector2.UP = new Vector2(0, 1);
-Vector2.DOWN = new Vector2(0, -1);
-Vector2.RIGHT = new Vector2(1, 0);
-Vector2.LEFT = new Vector2(-1, 0);
+Vector2.ZERO = Vector2(0, 0);
+Vector2.ONE = Vector2(1, 1);
+Vector2.UP = Vector2(0, 1);
+Vector2.DOWN = Vector2(0, -1);
+Vector2.RIGHT = Vector2(1, 0);
+Vector2.LEFT = Vector2(-1, 0);
 
 Vector2.prototype = {
 	clone: function() {
-		return new Vector2(this.x, this.y)
+		return Vector2(this.x, this.y)
 	},
 
 	add: function(vector) {
-		return new Vector2(this.x + vector.x, this.y + vector.y);
+		return Vector2(this.x + vector.x, this.y + vector.y);
 	},
 
 	subtract: function(vector) {
-		return new Vector2(this.x - vector.x, this.y - vector.y);
+		return Vector2(this.x - vector.x, this.y - vector.y);
 	},
 
 	scale: function(scalar) {
-		return new Vector2(this.x * scalar, this.y * scalar);
+		return Vector2(this.x * scalar, this.y * scalar);
 	},
 
 	dot: function(vector) {
@@ -80,13 +84,13 @@ Vector2.prototype = {
 		var sin = Math.sin(alpha);
 		var x = this.x * cos - this.y * sin;
 		var y = this.x * sin + this.y * cos;
-		return new Vector2(x, y);
+		return Vector2(x, y);
 	},
 
 	toPrecision: function(precision) {
 		var x = this.x.toFixed(precision);
 		var y = this.y.toFixed(precision);
-		return new Vector2(x, y);
+		return Vector2(x, y);
 	},
 
 	toString: function () {

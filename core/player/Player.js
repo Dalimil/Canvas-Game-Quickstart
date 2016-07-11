@@ -1,3 +1,57 @@
-// Movement has to be normalized (e.g. UP + RIGHT  div by sqrt(2) )
+function Player(ctx, position) {
+	this.ctx = ctx; // canvas drawing context
+	var position = position;
+	var health = 100;
+	var speed = 10; // Speed per second
+	var gunTimer = 0;
+	var timeBetweenBullets = 0.5;
 
-// Could be further split into PlayerShooting, PlayerMovement, PlayerStats, ...
+	// We won't have too many players so it's OK to attach methods here
+
+	this.update = function(dt) {  // dt is the number of seconds passed since last update
+		// Move
+		var movement = this._getMovementVector().multiply(dt * speed);
+		position = position.add(movement); // move
+
+		// Shoot with left mouse button
+		gunTimer += dt;
+		if(GameInput.isMouseDown[0] && gunTimer >= timeBetweenBullets) {
+			gunTimer = 0;
+			_shoot();
+		}
+	};
+
+	this.draw = function() {
+		ctx.save();
+			ctx.fillStyle = "#005";
+			ctx.beginPath();
+			ctx.arc(position.x, position.y, 10, 0, 2 * Math.PI); 
+			ctx.fill();
+		ctx.restore();
+	};
+}
+
+Player.prototype = {
+	
+	_getMovementVector: function() {
+		var movement = new Vector2(0, 0);
+		if(GameInput.isKeyDown('RIGHT')) { // detect which keys are down.
+			movement = movement.add(Vector2.RIGHT);
+		}
+		if(GameInput.isKeyDown('LEFT')) {
+			movement = movement.add(Vector2.LEFT);
+		}
+		if(GameInput.isKeyDown('UP')) {
+			movement = movement.add(Vector2.UP);
+		}
+		if(GameInput.isKeyDown('DOWN')) {
+			movement = movement.add(Vector2.DOWN);
+		}
+		return movement.normalize();
+	},
+
+	_shoot: function() {
+		// TODO
+		console.log("TODO: shoot now");
+	}
+};
