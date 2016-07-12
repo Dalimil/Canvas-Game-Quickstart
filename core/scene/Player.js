@@ -1,8 +1,7 @@
-function Player(context, position) {
-	var ctx = context; // canvas drawing context
-	var position = position;
+function Player(_position) {
+	var position = _position;
 	var health = 100;
-	var speed = 10; // Speed per second
+	var speed = 200; // Speed per second
 	var gunTimer = 0;
 	var timeBetweenBullets = 0.5;
 
@@ -10,7 +9,7 @@ function Player(context, position) {
 
 	this.update = function(dt) {  // dt is the number of seconds passed since last update
 		// Move
-		var movement = getMovementVector().multiply(dt * speed);
+		var movement = getMovementVector().scale(dt * speed);
 		position = position.add(movement); // move
 
 		// Shoot with left mouse button
@@ -21,11 +20,11 @@ function Player(context, position) {
 		}
 	};
 
-	this.draw = function() {
+	this.render = function(ctx) {
 		ctx.save();
 			ctx.fillStyle = "#005";
 			ctx.beginPath();
-			ctx.arc(position.x, position.y, 10, 0, 2 * Math.PI); 
+			ctx.arc(Math.round(position.x), Math.round(position.y), 10, 0, 2 * Math.PI); 
 			ctx.fill();
 		ctx.restore();
 	};
@@ -39,13 +38,13 @@ function Player(context, position) {
 			movement = movement.add(Vector2.LEFT);
 		}
 		if(GameInput.isKeyDown('UP')) {
-			movement = movement.add(Vector2.UP);
-		}
-		if(GameInput.isKeyDown('DOWN')) {
 			movement = movement.add(Vector2.DOWN);
 		}
+		if(GameInput.isKeyDown('DOWN')) {
+			movement = movement.add(Vector2.UP);
+		}
 		return movement.normalize();
-	},
+	}
 
 	function shoot() {
 		// TODO

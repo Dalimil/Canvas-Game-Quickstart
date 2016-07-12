@@ -15,10 +15,14 @@ var AppManager = (function() {
 		var $canvas = $("#canvas");
 		GameManager.init($canvas[0]);
 		GameInput.init($canvas);
-		AssetLoader.init(function() { 
+		/*AssetLoader.init(function() { 
 			loaded = true;
 			MainMenu.init(); // Callback function when Loaded
-		});
+		});*/
+			// start debug  /////////////////////
+				loaded = true;
+				unpause(); // todo - remove - main-menu skip - fix
+			// end debug //////////////////////////
 	}
 
 	function pause() {
@@ -41,7 +45,7 @@ var AppManager = (function() {
 		}
 		requestAnimFrame(main); // Best practice (Mozilla)
 
-		var delta = timestamp - lastTimestamp;
+		var delta = (timestamp - lastTimestamp)/1000;
 		lastTimestamp = timestamp; // ready for the next frame
 		
 		GameManager.update(delta);

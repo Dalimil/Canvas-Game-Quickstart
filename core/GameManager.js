@@ -9,7 +9,7 @@ var GameManager = (function() {
 		width = canvas.width;
 		height = canvas.height;
 		ctx = canvas.getContext("2d");
-		player = new Player(ctx, Vector2(120, 200));
+		player = new Player(Vector2(120, 200));
 	}
 
 	// Update game objects.
@@ -23,16 +23,11 @@ var GameManager = (function() {
 		// Clear canvas
 		ctx.clearRect(0, 0, width, height);
 		ctx.save(); // save to reset state at the end
-
-		// Draw objects
-		ShapeDrawing.drawRectangles(ctx);
-		ShapeDrawing.drawArc(ctx);
-		ShapeDrawing.drawText(ctx);
-
-		var mouseCoords = GameInput.getMouseCoords();
-		ctx.font = "12px sans";
-		ctx.fillText(mouseCoords[0] + ";" + mouseCoords[1], mouseCoords[0] + 10, mouseCoords[1]);
-
+			// Draw objects
+			Environment.render(ctx);
+			EnemyManager.render(ctx);
+			player.render(ctx);
+			Utils.drawMouseCoordinates(ctx);
 		ctx.restore(); // reset styles again
 	}
 

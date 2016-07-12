@@ -1,12 +1,16 @@
 var Environment = (function() {
 	// World representation
 
-	function draw(ctx) {
-		// Optimize, maybe don't need to redraw that often
+	function render(ctx) {
+		// Optimize, maybe don't need to redraw that often?
+		
+		ShapeDrawing.drawRectangles(ctx);
+		ShapeDrawing.drawArc(ctx);
+		ShapeDrawing.drawText(ctx);
 	}
 
 	return {
-		draw: draw
+		render: render
 	};
 
 })();

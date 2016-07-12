@@ -12,13 +12,12 @@ function Vector2(x, y) {
 	this.y = (y === undefined) ? 0 : y;
 }
 
-// Static Constants
-Vector2.ZERO = Vector2(0, 0);
-Vector2.ONE = Vector2(1, 1);
-Vector2.UP = Vector2(0, 1);
-Vector2.DOWN = Vector2(0, -1);
-Vector2.RIGHT = Vector2(1, 0);
-Vector2.LEFT = Vector2(-1, 0);
+Vector2.fromPolar = function(alpha, r) {
+	r = (r === undefined) ? 1 : r;
+	var x = r * Math.cos(alpha);
+	var y = r * Math.sin(alpha);
+	return Vector2(x, y);
+};
 
 Vector2.prototype = {
 	clone: function() {
@@ -79,7 +78,7 @@ Vector2.prototype = {
 		return Math.atan2(this.y, this.x);
 	},
 
-	rotate: function(alpha) {
+	rotateBy: function(alpha) {
 		var cos = Math.cos(alpha);
 		var sin = Math.sin(alpha);
 		var x = this.x * cos - this.y * sin;
@@ -98,3 +97,13 @@ Vector2.prototype = {
 		return ("[" + vector.x + "; " + vector.y + "]");
 	}
 };
+
+// Static Constants - clone first when using them
+// Defined here after replacing the prototype (above)
+Vector2.ZERO = Vector2(0, 0);
+Vector2.ONE = Vector2(1, 1);
+Vector2.UP = Vector2(0, 1);
+Vector2.DOWN = Vector2(0, -1);
+Vector2.RIGHT = Vector2(1, 0);
+Vector2.LEFT = Vector2(-1, 0);
+

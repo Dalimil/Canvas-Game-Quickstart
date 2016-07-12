@@ -14,5 +14,9 @@ var Random = {
 	// Using Math.round() would give a non-uniform distribution!
 	randomInt: function(min, max) {
 	  return Math.floor(Math.random() * (max - min + 1)) + min;
+	},
+
+	randomAngle: function() {
+		return this.randomRange(0, 2 * Math.PI);
 	}
 };
