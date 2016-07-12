@@ -1,5 +1,5 @@
-function Player(ctx, position) {
-	this.ctx = ctx; // canvas drawing context
+function Player(context, position) {
+	var ctx = context; // canvas drawing context
 	var position = position;
 	var health = 100;
 	var speed = 10; // Speed per second
@@ -10,14 +10,14 @@ function Player(ctx, position) {
 
 	this.update = function(dt) {  // dt is the number of seconds passed since last update
 		// Move
-		var movement = this._getMovementVector().multiply(dt * speed);
+		var movement = getMovementVector().multiply(dt * speed);
 		position = position.add(movement); // move
 
 		// Shoot with left mouse button
 		gunTimer += dt;
 		if(GameInput.isMouseDown[0] && gunTimer >= timeBetweenBullets) {
 			gunTimer = 0;
-			_shoot();
+			shoot();
 		}
 	};
 
@@ -29,11 +29,8 @@ function Player(ctx, position) {
 			ctx.fill();
 		ctx.restore();
 	};
-}
 
-Player.prototype = {
-	
-	_getMovementVector: function() {
+	function getMovementVector() {
 		var movement = new Vector2(0, 0);
 		if(GameInput.isKeyDown('RIGHT')) { // detect which keys are down.
 			movement = movement.add(Vector2.RIGHT);
@@ -50,8 +47,8 @@ Player.prototype = {
 		return movement.normalize();
 	},
 
-	_shoot: function() {
+	function shoot() {
 		// TODO
 		console.log("TODO: shoot now");
 	}
-};
+}
