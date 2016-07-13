@@ -1,14 +1,12 @@
-var Transformation = (function() {
-	// This module is just for functionality grouping purposes
+var Transformation = function() {
 
-	function translate(ctx) {
+	// Translation
 		ctx.save(); // saves canvas state
 		ctx.translate(10, 10);
 		ctx.fillRect(0, 0, 25, 25);
 		ctx.restore();
-	}
 	
-	function rotate(ctx) { 
+	// Rotation
 		// ctx.rotate(angle) rotates around its origin (0, 0)
 		ctx.save();
 
@@ -26,21 +24,13 @@ var Transformation = (function() {
 		ctx.fillRect(150, 30, 100, 100);
 
 		ctx.restore();
-	}
-
-	function scale(ctx) {
+	
+	// Scaling
 		ctx.save();
 		ctx.scale(2, 2); // scale x*2, y*2
 		// OR mirror horizontally: ctx.scale(-1, 1)
   		// OR mirror vertically: ctx.scale(1, -1)
   		ctx.fillRect(10,10,20,20);
 		ctx.restore();
-	}
-
-	return {
-		translate: translate,
-		rotate: rotate,
-		scale: scale
-	};
-
-})();
+	
+};

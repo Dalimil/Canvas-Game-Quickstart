@@ -10,12 +10,14 @@ var GameManager = (function() {
 		height = canvas.height;
 		ctx = canvas.getContext("2d");
 		player = new Player(Vector2(120, 200));
+		Camera.init(player.position.clone());
 	}
 
 	// Update game objects.
 	function update(dt) { // dt = time passed since last redraw
 		EnemyManager.update(dt);
 		player.update(dt);
+		Camera.update(dt, player);
 	}
 
 	// Draw everything
@@ -27,6 +29,7 @@ var GameManager = (function() {
 			Environment.render(ctx);
 			EnemyManager.render(ctx);
 			player.render(ctx);
+			Camera.render(ctx); // Debug
 			Utils.drawMouseCoordinates(ctx);
 		ctx.restore(); // reset styles again
 	}

@@ -21,8 +21,8 @@ var GameInput = (function() {
 		offset.left = Math.round(offset.left);
 		offset.top = Math.round(offset.top);
 
-		// Mousemove
-		$canvas.mousemove(function(e) {
+		// Mousemove - canvas is 'behind' the glass panel
+		$("#wrapper").mousemove(function(e) {
 			mouseCoords[0] = e.pageX - offset.left;
 			mouseCoords[1] = e.pageY - offset.top;
 		});
@@ -94,6 +94,9 @@ var GameInput = (function() {
 
 
 	function isKeyDown(key) {
+		if(key.match(/[a-zA-Z]/)) {
+			return (pressedKeys[key.toLowerCase()] || pressedKeys[key.toUpperCase()]);
+		}
 		return pressedKeys[key];
 	}
 

@@ -8,13 +8,13 @@ var EnemyManager = (function() {
 	];
 	var enemies = [];
 	var spawnTimer = 0;
-	var spawnPeriod = 0.5;
+	var spawnPeriod = 1.5;
 
 	function render(ctx) {
 		spawnPoints.forEach(function(point) {
 			ctx.save();
 				ctx.strokeStyle = '#E00';
-				ctx.strokeRect(point.x - 10, point.y - 10, 20, 20);
+				ctx.strokeRect(Math.round(point.x) - 10, Math.round(point.y) - 10, 20, 20);
 			ctx.restore();
 		});
 
