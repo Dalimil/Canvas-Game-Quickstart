@@ -6,7 +6,7 @@ var GameInput = (function() {
 
 	var pressedKeys = {};
 	var mouseDown = [false, false];
-	var mouseCoords = [0, 0];
+	var mouseCoords = Vector2();
 	var offset = null;
 
 	// Register observers and notify on click events
@@ -23,8 +23,8 @@ var GameInput = (function() {
 
 		// Mousemove - canvas is 'behind' the glass panel
 		$("#wrapper").mousemove(function(e) {
-			mouseCoords[0] = e.pageX - offset.left;
-			mouseCoords[1] = e.pageY - offset.top;
+			mouseCoords.x = e.pageX - offset.left;
+			mouseCoords.y = e.pageY - offset.top;
 		});
 
 		// + all the other events

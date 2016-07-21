@@ -87,8 +87,8 @@ Vector2.prototype = {
 	},
 
 	toPrecision: function(precision) {
-		var x = this.x.toFixed(precision);
-		var y = this.y.toFixed(precision);
+		var x = parseFloat(this.x.toFixed(precision));
+		var y = parseFloat(this.y.toFixed(precision));
 		return Vector2(x, y);
 	},
 

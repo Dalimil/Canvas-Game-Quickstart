@@ -26,11 +26,16 @@ var GameManager = (function() {
 		ctx.clearRect(0, 0, width, height);
 		ctx.save(); // save to reset state at the end
 			// Draw objects
-			Environment.render(ctx);
-			EnemyManager.render(ctx);
-			player.render(ctx);
-			Camera.render(ctx); // Debug
-			Utils.drawMouseCoordinates(ctx);
+			ctx.save();
+			Camera.transformView(ctx);
+				// Draw objects dependent on camera position
+				Environment.render(ctx);
+				EnemyManager.render(ctx);
+				player.render(ctx);
+				Camera.render(ctx); // Debug
+			ctx.restore();
+
+			Utils.drawMouseCoordinates(ctx, Camera.getShift());
 		ctx.restore(); // reset styles again
 	}
 

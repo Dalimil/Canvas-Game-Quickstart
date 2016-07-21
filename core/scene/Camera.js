@@ -2,25 +2,28 @@
 *  Could either be free-form (strategy games) or following the player
 */
 var Camera = (function() {
+	var canvasOffset = Vector2(); // fixed distance from canvas border
 	var position = Vector2(); // good idea not to use decimals
+	var shift = Vector2(); // position and offset difference
 	var smoothing = 5.5; // e.g. logarithmic (e.g. *0.9 per sec)
 
 	var viewportDimensions = null; // width, height?
 	var positionLimits = null; // game world size?
 	
 	function init(_position) {
+		canvasOffset = _position;
 		position = _position;
 	}
 
 	// Follow player
 	function update(dt, player) {
 		position = position.moveTowards(player.position, smoothing * dt);
+		shift = position.subtract(canvasOffset); // shift vector
 	}
 
-	// TODO
+	// Transforms canvas - simulates camera movement
 	function transformView(ctx) {
-		//ctx.save(); // saves canvas state
-		//ctx.translate(x, y);
+		ctx.translate(Math.round(-shift.x), Math.round(-shift.y)); // shift opposite
 	}
 
 	// Debug render
@@ -35,7 +38,8 @@ var Camera = (function() {
 		init: init,
 		update: update,
 		transformView: transformView,
-		render: render
+		render: render,
+		getShift: function() { return shift.toPrecision(0); }
 	};
 
 })();
