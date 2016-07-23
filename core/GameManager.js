@@ -17,6 +17,7 @@ var GameManager = (function() {
 	function update(dt) { // dt = time passed since last redraw
 		EnemyManager.update(dt);
 		player.update(dt);
+		Environment.update(dt);
 		Camera.update(dt, player);
 	}
 
@@ -35,7 +36,7 @@ var GameManager = (function() {
 				Camera.render(ctx); // Debug
 			ctx.restore();
 
-			Utils.drawMouseCoordinates(ctx, Camera.getShift());
+			Utils.drawMouseCoordinates(ctx);
 		ctx.restore(); // reset styles again
 	}
 

@@ -3,8 +3,8 @@ function Player(position) {
 	var health = 100;
 	var speed = 200; // Speed per second
 	var gunTimer = 0;
-	var timeBetweenBullets = 0.5;
-	var controls = { up: 'UP', down: 'DOWN', left: 'LEFT', right: 'RIGHT' };
+	var timeBetweenBullets = 0.2;
+	var controls = { up: ['UP', 'W'], down: ['DOWN', 'S'], left: ['LEFT', 'A'], right: ['RIGHT', 'D'] };
 
 	// We won't have too many players so it's OK to attach methods here
 
@@ -15,10 +15,16 @@ function Player(position) {
 
 		// Shoot with left mouse button
 		gunTimer += dt;
-		if(GameInput.isMouseDown[0] && gunTimer >= timeBetweenBullets) {
+		if(GameInput.isMouseDown()[0] && gunTimer >= timeBetweenBullets) {
 			gunTimer = 0;
-			shoot();
+			shoot.call(this);
 		}
+	};
+
+	this.getFacingDirection = function() {
+		var mouseCoords = GameInput.getMouseCoords();
+		var direction = mouseCoords.subtract(this.position);
+		return direction.normalize();
 	};
 
 	this.render = function(ctx) {
@@ -32,23 +38,23 @@ function Player(position) {
 
 	function getMovementVector() {
 		var movement = new Vector2(0, 0);
-		if(GameInput.isKeyDown(controls.right)) { // detect which keys are down.
+		if(controls.right.some(function(x) { return GameInput.isKeyDown(x); })) {
 			movement = movement.add(Vector2.RIGHT);
 		}
-		if(GameInput.isKeyDown(controls.left)) {
+		if(controls.left.some(function(x) { return GameInput.isKeyDown(x); })) {
 			movement = movement.add(Vector2.LEFT);
 		}
-		if(GameInput.isKeyDown(controls.up)) {
+		if(controls.up.some(function(x) { return GameInput.isKeyDown(x); })) {
 			movement = movement.add(Vector2.DOWN);
 		}
-		if(GameInput.isKeyDown(controls.down)) {
+		if(controls.down.some(function(x) { return GameInput.isKeyDown(x); })) {
 			movement = movement.add(Vector2.UP);
 		}
 		return movement.normalize();
 	}
 
 	function shoot() {
-		// TODO
-		console.log("TODO: shoot now");
+		var b = new Bullet(this.position, this.getFacingDirection());
+		b.spawn();
 	}
 }

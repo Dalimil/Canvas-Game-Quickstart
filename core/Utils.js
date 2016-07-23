@@ -12,14 +12,12 @@ var Utils = {
 	        };
 	},
 
-	drawMouseCoordinates: function(ctx, cameraShift) {
-		var mouseCoords = GameInput.getMouseCoords();
+	drawMouseCoordinates: function(ctx) {
+		var worldCoords = GameInput.getMouseCoords();
+		var mouseCoords = GameInput.getMouseCoords(false);
 		
-		var text = mouseCoords.toString();
-		if(cameraShift !== undefined) {
-			var worldCoords = mouseCoords.add(cameraShift);
-			text += " | " + worldCoords.toString();
-		}
+		var text = mouseCoords.toString() + " | " + worldCoords.toString();
+		
 		ctx.save();
 			ctx.font = "12px sans";
 			ctx.fillText(text, mouseCoords.x + 10, mouseCoords.y);

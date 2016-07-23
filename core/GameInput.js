@@ -56,9 +56,9 @@ var GameInput = (function() {
 	function setMouse(mouseButton, active) {
 		// mouseButton: 1-left, 2-middle, 3-right
 		if(mouseButton == 1) {
-			mouseDown[0] = true;
+			mouseDown[0] = active;
 		} else if(mouseButton == 3) {
-			mouseDown[1] = true;
+			mouseDown[1] = active;
 		}
 
 		observers.forEach(function(observer) {
@@ -104,7 +104,11 @@ var GameInput = (function() {
 		return mouseDown;
 	}
 
-	function getMouseCoords() {
+	function getMouseCoords(gameWorldCoords) {
+		gameWorldCoords = gameWorldCoords === undefined ? true : gameWorldCoords;
+		if(gameWorldCoords) {
+			return mouseCoords.add(Camera.getShift());
+		}
 		return mouseCoords;
 	}
 	
