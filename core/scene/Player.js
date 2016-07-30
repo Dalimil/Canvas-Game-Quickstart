@@ -1,7 +1,8 @@
 function Player(position) {
 	this.position = position;
 	var health = 100;
-	var speed = 200; // Speed per second
+	var speed = 200; // Pixel movement speed per second
+	var turnSpeed = 50; // Turn/Rotation speed
 	var gunTimer = 0;
 	var timeBetweenBullets = 0.2;
 	var controls = { up: ['UP', 'W'], down: ['DOWN', 'S'], left: ['LEFT', 'A'], right: ['RIGHT', 'D'] };
@@ -33,6 +34,10 @@ function Player(position) {
 			ctx.beginPath();
 			ctx.arc(Math.round(this.position.x), Math.round(this.position.y), 10, 0, 2 * Math.PI); 
 			ctx.fill();
+
+			var playerHead = this.position.add(this.getFacingDirection().scale(14));
+			ctx.fillStyle = "#000";
+			ctx.fillRect(playerHead.x-4, playerHead.y-4, 8, 8);
 		ctx.restore();
 	};
 
@@ -51,6 +56,19 @@ function Player(position) {
 			movement = movement.add(Vector2.UP);
 		}
 		return movement.normalize();
+	}
+
+	// TODO: Not used at the moment - use when LEFT - RIGHT keys should rotate the player
+	// Use with player.direction like this: this.direction.rotateBy(angle * dt)
+	function getTurnAngle() {
+		var angle = 0;
+		if(controls.right.some(function(x) { return GameInput.isKeyDown(x); })) {
+			angle -= turnSpeed;
+		}
+		if(controls.left.some(function(x) { return GameInput.isKeyDown(x); })) {
+			angle += turnSpeed;
+		}
+		return angle;
 	}
 
 	function shoot() {
