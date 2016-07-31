@@ -19,6 +19,14 @@ Vector2.fromPolar = function(alpha, r) {
 	return Vector2(x, y);
 };
 
+// Static Constants - but used as functions()
+Vector2.ZERO = function() { return Vector2(0, 0); };
+Vector2.ONE = function() { return  Vector2(1, 1); };
+Vector2.UP = function() { return  Vector2(0, 1); };
+Vector2.DOWN = function() { return  Vector2(0, -1); };
+Vector2.RIGHT = function() { return  Vector2(1, 0); };
+Vector2.LEFT = function() { return  Vector2(-1, 0); };
+
 Vector2.prototype = {
 	clone: function() {
 		return Vector2(this.x, this.y)
@@ -69,7 +77,7 @@ Vector2.prototype = {
 	normalize: function() {
 		var mag = this.magnitude();
 		if(Math.abs(mag) < 1e-9) {
-			return Vector2.ZERO.clone();
+			return Vector2.ZERO();
 		} 
 		return this.scale(1/mag);
 	},
@@ -86,24 +94,16 @@ Vector2.prototype = {
 		return Vector2(x, y);
 	},
 
-	toPrecision: function(precision) {
+	round: function(precision) {
+		precision = (precision === undefined) ? 0 : precision;
 		var x = parseFloat(this.x.toFixed(precision));
 		var y = parseFloat(this.y.toFixed(precision));
 		return Vector2(x, y);
 	},
 
 	toString: function () {
-		var vector = this.toPrecision(1);
+		var vector = this.round(1);
 		return ("[" + vector.x + "; " + vector.y + "]");
 	}
 };
-
-// Static Constants - clone first when using them
-// Defined here after replacing the prototype (above)
-Vector2.ZERO = Vector2(0, 0);
-Vector2.ONE = Vector2(1, 1);
-Vector2.UP = Vector2(0, 1);
-Vector2.DOWN = Vector2(0, -1);
-Vector2.RIGHT = Vector2(1, 0);
-Vector2.LEFT = Vector2(-1, 0);
 
