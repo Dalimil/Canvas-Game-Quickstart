@@ -2,20 +2,20 @@ function Bullet(position, direction) {
 	this.position = position;
 	this.direction = direction;
 	this.speed = 400; // split direction and speed - speed not configurable
-	this._spawned = false;
+	this.spawned = false;
 }
 
 Bullet.prototype = {
 	spawn: function() {
-		if(!this._spawned) {
+		if(!this.spawned) {
 			Environment.registerGameObject(this); // bullet now exists + is rendered
 			//Collisions.registerGameObject(this); // collision events
-			this._spawned = true;
+			this.spawned = true;
 		}
 	},
 
 	update: function(dt) {
-		if(this._spawned) {
+		if(this.spawned) {
 			var movement = this.direction.scale(dt * this.speed);
 			this.position = this.position.add(movement);
 		}
@@ -28,12 +28,13 @@ Bullet.prototype = {
 	},
 
 	render: function(ctx) {
-		if(!this._spawned) return;
+		if(!this.spawned) return;
 
+		var center = this.position.round();
 		ctx.save();
 			ctx.fillStyle = "#222";
 			ctx.beginPath();
-			ctx.arc(Math.round(this.position.x), Math.round(this.position.y), 3, 0, 2 * Math.PI); 
+			ctx.arc(center.x, center.y, 3, 0, 2 * Math.PI); 
 			ctx.fill();
 		ctx.restore();
 	}

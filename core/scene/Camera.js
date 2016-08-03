@@ -23,14 +23,16 @@ var Camera = (function() {
 
 	// Transforms canvas - simulates camera movement
 	function transformView(ctx) {
-		ctx.translate(Math.round(-shift.x), Math.round(-shift.y)); // shift opposite
+		var rShift = shift.round();
+		ctx.translate(-rShift.x, -rShift.y); // shift opposite
 	}
 
 	// Debug render
 	function render(ctx) {
+		var center = position.round();
 		ctx.save();
 			ctx.strokeStyle = '#0E0';
-			ctx.strokeRect(Math.round(position.x) - 10, Math.round(position.y) - 10, 20, 20);
+			ctx.strokeRect(center.x - 10, center.y - 10, 20, 20);
 		ctx.restore();
 	}
 
@@ -39,7 +41,7 @@ var Camera = (function() {
 		update: update,
 		transformView: transformView,
 		render: render,
-		getShift: function() { return shift.toPrecision(0); }
+		getShift: function() { return shift.round(); }
 	};
 
 })();

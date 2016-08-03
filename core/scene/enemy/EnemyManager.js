@@ -12,9 +12,10 @@ var EnemyManager = (function() {
 
 	function render(ctx) {
 		spawnPoints.forEach(function(point) {
+			var center = point.round();
 			ctx.save();
 				ctx.strokeStyle = '#E00';
-				ctx.strokeRect(Math.round(point.x) - 10, Math.round(point.y) - 10, 20, 20);
+				ctx.strokeRect(center.x - 10, center.y - 10, 20, 20);
 			ctx.restore();
 		});
 

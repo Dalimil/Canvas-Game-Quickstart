@@ -7,10 +7,11 @@ function Enemy(position, direction) {
 
 Enemy.prototype = {
 	render: function(ctx) {
+		var center = this.position.round();
 		ctx.save();
 			ctx.fillStyle = "#A5A";
 			ctx.beginPath();
-			ctx.arc(Math.round(this.position.x), Math.round(this.position.y), 10, 0, 2 * Math.PI); 
+			ctx.arc(center.x, center.y, 10, 0, 2 * Math.PI); 
 			ctx.fill();
 		ctx.restore();
 	},

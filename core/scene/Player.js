@@ -1,35 +1,43 @@
 function Player(position) {
 	this.position = position;
-	this.direction = Vector.RIGHT();
-	var health = 100;
-	var speed = 200; // Pixel movement speed per second
-	var turnSpeed = 1.5; // Turn/Rotation speed per second
-	var gunTimer = 0;
-	var timeBetweenBullets = 0.2;
-	var controls = { up: ['UP', 'W'], down: ['DOWN', 'S'], left: ['LEFT', 'A'], right: ['RIGHT', 'D'] };
+	this.direction = Vector2.RIGHT();
+	this.health = 100;
+	this.speed = 180; // Pixel movement speed per second
+	this.turnSpeed = 3.2; // Turn/Rotation speed per second
+	this.gunTimer = 0;
+	this.TIME_BETWEEN_BULLETS = 0.2;
+	this.controls = { up: ['UP', 'W'], down: ['DOWN', 'S'], left: ['LEFT', 'A'], right: ['RIGHT', 'D'] };
+}
 
-	this.update = function(dt) {  // dt is the number of seconds passed since last update
-		// Rotate
-		this.direction = this.direction.rotateBy(getTurnAngle() * dt);
+Player.prototype = {
+	update: function(dt) {  // dt is the number of seconds passed since last update
+		
+
 		// Move
-		var velocity = this.direction.scale(getMovementDirection() * speed);
+		var velocity = this.direction.scale(this.getMovementDirection() * this.speed);
 		this.position = this.position.add(velocity.scale(dt));
-
+// Rotate
+		this.direction = this.direction.rotateBy(this.getTurnAngle() * dt);
 		// Shoot with left mouse button
-		gunTimer += dt;
-		if(GameInput.isMouseDown()[0] && gunTimer >= timeBetweenBullets) {
-			gunTimer = 0;
-			shoot.call(this);
+		this.gunTimer += dt;
+		if(GameInput.isMouseDown()[0] && this.gunTimer >= this.TIME_BETWEEN_BULLETS) {
+			this.gunTimer = 0;
+			this.shoot();
 		}
-	};
+	},
 
-	this.getShootingDirection = function() {
+	getShootingDirection: function() {
 		var mouseCoords = GameInput.getMouseCoords();
 		var direction = mouseCoords.subtract(this.position);
 		return direction.normalize();
-	};
+	},
 
-	this.render = function(ctx) {
+	shoot: function() {
+		var b = new Bullet(this.position, this.getShootingDirection());
+		b.spawn();
+	},
+
+	render: function(ctx) {
 		ctx.save();
 			var playerBody = this.position.round();
 			ctx.fillStyle = "#005";
@@ -44,45 +52,41 @@ function Player(position) {
 			ctx.fill();
 			
 			var playerGun = this.position.add(this.getShootingDirection().scale(14)).round();
-			ctx.fillStyle = "#000";
+			ctx.fillStyle = "#900";
 			ctx.fillRect(playerGun.x-4, playerGun.y-4, 8, 8);
 		ctx.restore();
-	};
+	},
 
-	function getMovementDirection() {
+	getMovementDirection: function() {
 		var movement = Vector2.ZERO();
-		if(controls.up.some(function(x) { return GameInput.isKeyDown(x); })) {
-			movement = movement.add(Vector2.DOWN());
-		}
-		if(controls.down.some(function(x) { return GameInput.isKeyDown(x); })) {
+		if(this.controls.up.some(function(x) { return GameInput.isKeyDown(x); })) {
 			movement = movement.add(Vector2.UP());
+		}
+		if(this.controls.down.some(function(x) { return GameInput.isKeyDown(x); })) {
+			movement = movement.add(Vector2.DOWN());
 		}
 		// We use alternative controls with only forward/backward indication
 		return movement.y; // +1 0 -1
 		/*// Alternatively, we could control all 4 directions + vector normalization
-		if(controls.right.some(function(x) { return GameInput.isKeyDown(x); })) {
+		if(this.controls.right.some(function(x) { return GameInput.isKeyDown(x); })) {
 			movement = movement.add(Vector2.RIGHT());
 		}
-		if(controls.left.some(function(x) { return GameInput.isKeyDown(x); })) {
+		if(this.controls.left.some(function(x) { return GameInput.isKeyDown(x); })) {
 			movement = movement.add(Vector2.LEFT());
 		}
 		return movement.normalize(); */
-	}
+	},
 
-	function getTurnAngle() {
+	getTurnAngle: function() {
 		var angle = 0;
-		if(controls.right.some(function(x) { return GameInput.isKeyDown(x); })) {
-			angle -= turnSpeed;
+		// Note that Canvas Y axis is reversed (+/-)
+		if(this.controls.right.some(function(x) { return GameInput.isKeyDown(x); })) {
+			angle += this.turnSpeed; 
 		}
-		if(controls.left.some(function(x) { return GameInput.isKeyDown(x); })) {
-			angle += turnSpeed;
+		if(this.controls.left.some(function(x) { return GameInput.isKeyDown(x); })) {
+			angle -= this.turnSpeed;
 		}
 		return angle;
 	}
-
-	function shoot() {
-		var b = new Bullet(this.position, this.getShootingDirection());
-		b.spawn();
-	}
-}
+};
 
