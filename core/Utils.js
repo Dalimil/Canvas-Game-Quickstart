@@ -16,7 +16,7 @@ var Utils = {
 		var worldCoords = GameInput.getMouseCoords();
 		var mouseCoords = GameInput.getMouseCoords(false);
 		
-		var text = mouseCoords.toString() + " | " + worldCoords.toString();
+		var text = "w" + worldCoords.toString() + "; m" + mouseCoords.toString();
 		
 		ctx.save();
 			ctx.font = "12px sans";

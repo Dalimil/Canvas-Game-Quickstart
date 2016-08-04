@@ -11,6 +11,7 @@ var GameManager = (function() {
 		ctx = canvas.getContext("2d");
 		player = new Player(Vector2(120, 200));
 		Camera.init(player.position.clone());
+		Environment.init(width, height);
 	}
 
 	// Update game objects.
