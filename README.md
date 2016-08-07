@@ -7,6 +7,7 @@
 - [ ] Light module - directional, ambient, ...
 - [ ] Power-up (triggers) module - onTrigger() interface for gameObjects
 - [ ] HUD module - with health, mana, sound switch and main-menu link
-- [ ] Try Unity Tanks tutorial (implement in Canvas) - especially Camera and 2pl controls
+- [ ] Add power shot - right click and hold - show loading arrow in front (power indicator)
+- [ ] Implement game rounds in GameManager
 - [ ] use browserify - https://github.com/substack/node-browserify
 - [ ] init npm + websockets and multiplayer? - or fork into a different repo (e.g. pure multiplayer game skeleton)
