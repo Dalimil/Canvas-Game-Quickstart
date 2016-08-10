@@ -10,8 +10,7 @@ requirejs.config({
     }
 });
 
-// todo
-// http://www.manuel-strehl.de/dev/load_jquery_before_requirejs.en.html
+// Check http://www.manuel-strehl.de/dev/load_jquery_before_requirejs.en.html if jQuery not working
 
 // Start the main app logic.
 requirejs(['app/AppManager']);

@@ -12,7 +12,7 @@ define(function() {
 
 	function addLoadFunction(func) {
 		if(loaded) return;
-
+		
 		// func should take 2 callbacks for done() and tick()
 		loadComponents.push({ f: func });
 	}

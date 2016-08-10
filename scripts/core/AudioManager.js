@@ -3,8 +3,6 @@
 define(function(require) {
 
 	var AssetLoader = require("app/AssetLoader");
-	// Register our load function
-	AssetLoader.addLoadFunction(load);
 
 	var audioCtx = new (window.AudioContext || window.webkitAudioContext)();
 
@@ -28,6 +26,10 @@ define(function(require) {
 	gainAmbient.gain.value = volumeAmbient; 
 	gainEffects.gain.value = volumeEffects;
 
+	function init() {
+		// Register our load function
+		AssetLoader.addLoadFunction(load);
+	}
 
 	function initSources() {
 		sourceAmbient = audioCtx.createBufferSource();
@@ -102,6 +104,7 @@ define(function(require) {
 	}
 
 	return {
+		init: init,
 		playAmbient: playAmbient,
 		stopAmbient: stopAmbient,
 		playGunshot: playGunshot

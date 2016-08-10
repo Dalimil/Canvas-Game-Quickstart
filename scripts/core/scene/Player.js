@@ -4,6 +4,7 @@ define(function(require) {
 
 	var Vector2 = require("maths/Vector2");
 	var GameInput = require("app/GameInput");
+	var Bullet = require("scene/Bullet");
 	
 	function Player(position) {
 		this.position = position;
@@ -31,6 +32,9 @@ define(function(require) {
 				this.gunTimer = 0;
 				this.shoot();
 			}
+
+			// Power shot with right mouse button
+			
 		},
 
 		getShootingDirection: function() {

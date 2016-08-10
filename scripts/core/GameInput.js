@@ -7,6 +7,7 @@
 define(function (require) {
 
 	var Vector2 = require("maths/Vector2");
+	var Camera = require("scene/Camera");
 
 	var pressedKeys = {};
 	var mouseDown = [false, false];

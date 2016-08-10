@@ -7,6 +7,7 @@ define(function (require, exports, module) {
 
 	var GameManager = require("app/GameManager");
 	var GameInput = require("app/GameInput");
+	var AudioManager = require("app/AudioManager");
 	var AssetLoader = require("app/AssetLoader");
 	var MainMenu = require("app/MainMenu");
 	var Utils = require("app/Utils");
@@ -23,18 +24,19 @@ define(function (require, exports, module) {
 		var $canvas = $("#canvas");
 		GameManager.init($canvas[0]);
 		GameInput.init($canvas);
+		AudioManager.init();
 		MainMenu.init(function() {
 			MainMenu.hide();
 			resume();
 		});
 		/*AssetLoader.init(function() { 
-			// Callback function when Loaded
+			// Callback when Loaded
 			loaded = true;
 			MainMenu.show(); 
-		});*/
+		});//*/
 			// start debug  /////////////////////
 				loaded = true;
-				resume(); // todo - remove - main-menu skip - fix
+				resume(); // todo - remove - skip main-menu hack
 			// end debug //////////////////////////
 	}
 

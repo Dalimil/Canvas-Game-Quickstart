@@ -7,6 +7,7 @@ define(function(require) {
 	
 	// World representation
 	var gameObjects = []; // particles, power-ups etc.
+	
 	var boundaries = [
 		Vector2(-50, 200),
 		Vector2(500, -100),
