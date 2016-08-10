@@ -11,13 +11,13 @@ function Player(position) {
 
 Player.prototype = {
 	update: function(dt) {  // dt is the number of seconds passed since last update
-		
-
 		// Move
 		var velocity = this.direction.scale(this.getMovementDirection() * this.speed);
 		this.position = this.position.add(velocity.scale(dt));
-// Rotate
-		this.direction = this.direction.rotateBy(this.getTurnAngle() * dt);
+		
+		// Rotate
+		this.direction = this.direction.rotate(this.getTurnAngle() * dt);
+
 		// Shoot with left mouse button
 		this.gunTimer += dt;
 		if(GameInput.isMouseDown()[0] && this.gunTimer >= this.TIME_BETWEEN_BULLETS) {

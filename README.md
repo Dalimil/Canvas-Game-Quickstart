@@ -3,7 +3,7 @@
 **This is a template for JavaScript 2D games (or animations) using HTML5 Canvas**
 
 ## TODO
-- [ ] Implement physics engine, incl. collisions and resolution
+- [ ] Implement physics engine, incl. collisions and resolution; Maybe create generic rigid body object with gravity and friction
 - [ ] Light module - directional, ambient, ...
 - [ ] Power-up (triggers) module - onTrigger() interface for gameObjects
 - [ ] HUD module - with health, mana, sound switch and main-menu link

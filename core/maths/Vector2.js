@@ -86,7 +86,7 @@ Vector2.prototype = {
 		return Math.atan2(this.y, this.x);
 	},
 
-	rotateBy: function(alpha) {
+	rotate: function(alpha) {
 		var cos = Math.cos(alpha);
 		var sin = Math.sin(alpha);
 		var x = this.x * cos - this.y * sin;
