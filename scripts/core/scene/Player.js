@@ -4,7 +4,7 @@ define(function(require) {
 
 	var Vector2 = require("maths/Vector2");
 	var GameInput = require("app/GameInput");
-	var Bullet = require("scene/Bullet");
+	var Gun = require("scene/Gun");
 	
 	function Player(position) {
 		this.position = position;
@@ -12,8 +12,7 @@ define(function(require) {
 		this.health = 100;
 		this.speed = 180; // Pixel movement speed per second
 		this.turnSpeed = 3.2; // Turn/Rotation speed per second
-		this.gunTimer = 0;
-		this.TIME_BETWEEN_BULLETS = 0.2;
+		this.gun = new Gun(this);
 		this.controls = { up: ['UP', 'W'], down: ['DOWN', 'S'], left: ['LEFT', 'A'], right: ['RIGHT', 'D'] };
 	}
 
@@ -26,26 +25,8 @@ define(function(require) {
 			// Rotate
 			this.direction = this.direction.rotate(this.getTurnAngle() * dt);
 
-			// Shoot with left mouse button
-			this.gunTimer += dt;
-			if(GameInput.isMouseDown()[0] && this.gunTimer >= this.TIME_BETWEEN_BULLETS) {
-				this.gunTimer = 0;
-				this.shoot();
-			}
-
-			// Power shot with right mouse button
-			
-		},
-
-		getShootingDirection: function() {
-			var mouseCoords = GameInput.getMouseCoords();
-			var direction = mouseCoords.subtract(this.position);
-			return direction.normalize();
-		},
-
-		shoot: function() {
-			var b = new Bullet(this.position, this.getShootingDirection());
-			b.spawn();
+			// Shoot
+			this.gun.update(dt);
 		},
 
 		render: function(ctx) {
@@ -62,9 +43,7 @@ define(function(require) {
 				ctx.arc(playerHead.x, playerHead.y, 5, 0, 2 * Math.PI);
 				ctx.fill();
 				
-				var playerGun = this.position.add(this.getShootingDirection().scale(14)).round();
-				ctx.fillStyle = "#900";
-				ctx.fillRect(playerGun.x-4, playerGun.y-4, 8, 8);
+				this.gun.render(ctx, 14);
 			ctx.restore();
 		},
 
