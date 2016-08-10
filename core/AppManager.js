@@ -1,5 +1,5 @@
 /**
-* Initializes the game loop and pause/unpause events
+* Initializes the game loop and pause/resume events
 */
 var AppManager = (function() {
 
@@ -21,7 +21,7 @@ var AppManager = (function() {
 		});*/
 			// start debug  /////////////////////
 				loaded = true;
-				unpause(); // todo - remove - main-menu skip - fix
+				resume(); // todo - remove - main-menu skip - fix
 			// end debug //////////////////////////
 	}
 
@@ -29,7 +29,7 @@ var AppManager = (function() {
 		running = false;
 	}
 
-	function unpause() {
+	function resume() {
 		if(loaded) {
 			running = true;
 			lastTimestamp = performance.now();
@@ -54,7 +54,7 @@ var AppManager = (function() {
 
 	return {
 		pause: pause,
-		unpause: unpause,
+		resume: resume,
 		isRunning: function() { return running; }
 	};
 

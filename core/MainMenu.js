@@ -10,7 +10,7 @@ var MainMenu = (function() {
 		var $playButton = $("#menu-play");
 		$playButton.click(function() {
 			$menuScreen.fadeOut();
-			AppManager.unpause();
+			AppManager.resume();
 		});
 
 		var $creditsButton = $("#menu-credits");
