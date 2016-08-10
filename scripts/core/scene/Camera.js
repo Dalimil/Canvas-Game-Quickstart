@@ -1,7 +1,12 @@
 /* Single camera in the game 
 *  Could either be free-form (strategy games) or following the player
 */
-var Camera = (function() {
+"use strict";
+
+define(function(require) {
+
+	var Vector2 = require("maths/Vector2");
+
 	var canvasOffset = Vector2(); // fixed distance from canvas border
 	var position = Vector2(); // good idea not to use decimals
 	var shift = Vector2(); // position and offset difference
@@ -44,4 +49,4 @@ var Camera = (function() {
 		getShift: function() { return shift.round(); }
 	};
 
-})();
+});

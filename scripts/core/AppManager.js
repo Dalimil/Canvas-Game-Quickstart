@@ -1,7 +1,15 @@
 /**
 * Initializes the game loop and pause/resume events
 */
-var AppManager = (function() {
+"use strict";
+
+define(function (require, exports, module) {
+
+	var GameManager = require("app/GameManager");
+	var GameInput = require("app/GameInput");
+	var AssetLoader = require("app/AssetLoader");
+	var MainMenu = require("app/MainMenu");
+	var Utils = require("app/Utils");
 
 	var loaded = false;
 	var running = false;
@@ -15,9 +23,14 @@ var AppManager = (function() {
 		var $canvas = $("#canvas");
 		GameManager.init($canvas[0]);
 		GameInput.init($canvas);
+		MainMenu.init(function() {
+			MainMenu.hide();
+			resume();
+		});
 		/*AssetLoader.init(function() { 
+			// Callback function when Loaded
 			loaded = true;
-			MainMenu.init(); // Callback function when Loaded
+			MainMenu.show(); 
 		});*/
 			// start debug  /////////////////////
 				loaded = true;
@@ -58,4 +71,4 @@ var AppManager = (function() {
 		isRunning: function() { return running; }
 	};
 
-})();
+});

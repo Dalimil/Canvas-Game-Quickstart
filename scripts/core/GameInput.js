@@ -2,7 +2,11 @@
 * Handles all keyboard and mouse input events
 * Use the observer pattern for mouse click events
 */
-var GameInput = (function() {
+"use strict";
+
+define(function (require) {
+
+	var Vector2 = require("maths/Vector2");
 
 	var pressedKeys = {};
 	var mouseDown = [false, false];
@@ -121,4 +125,4 @@ var GameInput = (function() {
 		registerObserver: registerObserver
 	};
 
-})();
+});

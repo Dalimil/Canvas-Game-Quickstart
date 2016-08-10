@@ -1,4 +1,10 @@
-var Environment = (function() {
+"use strict";
+
+define(function(require) {
+
+	var Vector2 = require("maths/Vector2");
+	var Camera = require("scene/Camera");
+	
 	// World representation
 	var gameObjects = []; // particles, power-ups etc.
 	var boundaries = [
@@ -66,4 +72,4 @@ var Environment = (function() {
 		render: render
 	};
 
-})();
+});

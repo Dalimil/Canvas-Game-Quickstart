@@ -1,16 +1,16 @@
-var MainMenu = (function() {
+"use strict";
+
+define(function(require) {
 	
 	var $menuScreen = null;
 
-	function init() {
+	function init(clickPlayCallback) {
 		$menuScreen = $("#menu-wrapper");
-		$menuScreen.fadeIn("slow");
-
+		
 		// Setup button click listeners
 		var $playButton = $("#menu-play");
 		$playButton.click(function() {
-			$menuScreen.fadeOut();
-			AppManager.resume();
+			clickPlayCallback();
 		});
 
 		var $creditsButton = $("#menu-credits");
@@ -26,9 +26,18 @@ var MainMenu = (function() {
 		// TODO - uncomment - AudioManager.playAmbient();
 	}
 
+	function show() {
+		$menuScreen.fadeIn("slow");
+	}
+
+	function hide() {
+		$menuScreen.fadeOut();
+	}
 
 	return {
-		init: init
+		init: init,
+		show: show,
+		hide: hide
 	};
 
-})();
+});

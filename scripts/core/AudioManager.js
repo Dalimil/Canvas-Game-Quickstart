@@ -1,4 +1,10 @@
-var AudioManager = (function() {
+"use strict";
+
+define(function(require) {
+
+	var AssetLoader = require("app/AssetLoader");
+	// Register our load function
+	AssetLoader.addLoadFunction(load);
 
 	var audioCtx = new (window.AudioContext || window.webkitAudioContext)();
 
@@ -8,9 +14,6 @@ var AudioManager = (function() {
 		'gunshot.wav'
 	];
 	var filePrefix = 'audio/';
-
-	// Register our load function
-	AssetLoader.addLoadFunction(load);
 
 	var sourceAmbient = null;
 	var sourceGunshot = null;
@@ -104,4 +107,4 @@ var AudioManager = (function() {
 		playGunshot: playGunshot
 	};
 
-})();
+});

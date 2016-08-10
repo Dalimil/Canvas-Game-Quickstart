@@ -1,4 +1,6 @@
-var AssetLoader = (function() {
+"use strict";
+
+define(function() {
 	
 	var loadComponents = [];
 	var numComponentsToLoad = null;
@@ -70,4 +72,4 @@ var AssetLoader = (function() {
 		isLoaded: function() { return loaded; }
 	};
 
-})();
+});

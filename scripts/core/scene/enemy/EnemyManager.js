@@ -1,5 +1,11 @@
 // Spawning, global coordination etc.
-var EnemyManager = (function() {
+"use strict";
+
+define(function(require) {
+
+	var Vector2 = require("maths/Vector2");
+	var Random = require("maths/Random");
+	var Enemy = require("scene/enemy/Enemy");
 
 	var spawnPoints = [
 		Vector2(100, 200), 
@@ -49,4 +55,4 @@ var EnemyManager = (function() {
 		update: update
 	};
 	
-})();
+});

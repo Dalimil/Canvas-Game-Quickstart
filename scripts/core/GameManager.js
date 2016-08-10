@@ -1,5 +1,15 @@
-var GameManager = (function() {
+"use strict";
 
+define(function(require) {
+
+	var Camera = require("scene/Camera");
+	var Environment = require("scene/Environment");
+	var Player = require("scene/Player");
+	var EnemyManager = require("scene/enemy/EnemyManager");
+	var GameInput = require("app/GameInput");
+	var Utils = require("app/Utils");
+	var Vector2 = require("maths/Vector2");
+	
 	var width;
 	var height;
 	var ctx;
@@ -37,7 +47,8 @@ var GameManager = (function() {
 				Camera.render(ctx); // Debug
 			ctx.restore();
 
-			Utils.drawMouseCoordinates(ctx);
+			Utils.drawMouseCoordinates(ctx, GameInput.getMouseCoords(), 
+				GameInput.getMouseCoords(false));
 		ctx.restore(); // reset styles again
 	}
 
@@ -47,4 +58,4 @@ var GameManager = (function() {
 		render: render
 	};
 
-})();
+});

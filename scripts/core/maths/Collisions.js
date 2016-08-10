@@ -1,4 +1,6 @@
-var Collisions = (function() {
+"use strict";
+
+define(function() {
 
 	var objects = [];
 
@@ -16,7 +18,7 @@ var Collisions = (function() {
 		update: update
 	};
 
-})();
+});
 
 // Separating Axis Theorem
 // - find if 2 polygons overlap and push them back to resolve the collision
