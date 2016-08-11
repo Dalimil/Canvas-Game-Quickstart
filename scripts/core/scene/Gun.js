@@ -23,18 +23,20 @@ define(function(require) {
 		},
 
 		shoot: function() {
-			var bullet = new Bullet(this.owner.position, this.getShootingDirection());
+			var bullet = new Bullet(this.owner.body.position, this.getShootingDirection());
 			bullet.spawn();
 		},
 
 		getShootingDirection: function() {
 			var mouseCoords = GameInput.getMouseCoords();
-			var direction = mouseCoords.subtract(this.owner.position);
+			var direction = mouseCoords.subtract(this.owner.body.position);
 			return direction.normalize();
 		},
 
 		render: function(ctx, distance) {
-			var center = this.owner.position.add(this.getShootingDirection().scale(distance)).round();
+			var center = this.owner.body.position
+				.add(this.getShootingDirection().scale(distance))
+				.round();
 			ctx.fillStyle = "#900";
 			ctx.fillRect(center.x-4, center.y-4, 8, 8);
 		}

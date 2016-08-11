@@ -2,12 +2,11 @@
 
 define(function(require) {
 
+	var Body = require("maths/Body");
 	var Environment = require("scene/Environment");
 
 	function Bullet(position, direction) {
-		this.position = position;
-		this.direction = direction;
-		this.speed = 400; // split direction and speed - speed not configurable
+		this.body = new Body(position, direction, 400);
 		this.spawned = false;
 	}
 
@@ -22,8 +21,7 @@ define(function(require) {
 
 		update: function(dt) {
 			if(this.spawned) {
-				var movement = this.direction.scale(dt * this.speed);
-				this.position = this.position.add(movement);
+				this.body.update(dt);
 			}
 		},
 
@@ -36,7 +34,7 @@ define(function(require) {
 		render: function(ctx) {
 			if(!this.spawned) return;
 
-			var center = this.position.round();
+			var center = this.body.position.round();
 			ctx.save();
 				ctx.fillStyle = "#222";
 				ctx.beginPath();

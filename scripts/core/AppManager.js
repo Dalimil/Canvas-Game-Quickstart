@@ -17,9 +17,11 @@ define(function (require, exports, module) {
 	var lastTimestamp;
 	var requestAnimFrame = Utils.getRequestAnimationFrame(); // cross-browser
 
-	$(window).on("load", init); // onload
-
 	function init() {
+		$(document).ready(onDomReady);
+	}
+
+	function onDomReady() {
 		// Initialize components by passing the canvas object
 		var $canvas = $("#canvas");
 		GameManager.init($canvas[0]);
@@ -68,6 +70,7 @@ define(function (require, exports, module) {
 	}
 
 	return {
+		init: init,
 		pause: pause,
 		resume: resume,
 		isRunning: function() { return running; }

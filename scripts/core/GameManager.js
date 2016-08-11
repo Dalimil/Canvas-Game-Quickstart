@@ -19,8 +19,10 @@ define(function(require) {
 		width = canvas.width;
 		height = canvas.height;
 		ctx = canvas.getContext("2d");
-		player = new Player(Vector2(120, 200));
-		Camera.init(player.position.clone());
+
+		var position = Vector2(120, 200);
+		player = new Player(position.clone());
+		Camera.init(position.clone());
 		Environment.init(width, height);
 	}
 
