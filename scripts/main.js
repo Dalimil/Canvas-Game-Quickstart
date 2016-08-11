@@ -13,4 +13,6 @@ requirejs.config({
 // Check http://www.manuel-strehl.de/dev/load_jquery_before_requirejs.en.html if jQuery not working
 
 // Start the main app logic.
-requirejs(['app/AppManager']);
+requirejs(['app/AppManager'], function(app) {
+	app.init();
+});

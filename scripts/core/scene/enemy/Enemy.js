@@ -1,17 +1,17 @@
 "use strict";
 
-define(function() {
+define(function(require) {
+
+	var Body = require("maths/Body");
 
 	function Enemy(position, direction) {
-		this.position = position;
-		this.direction = direction;
+		this.body = new Body(position, direction, 50);
 		this.health = 100;
-		this.speed = 50;
 	}
 
 	Enemy.prototype = {
 		render: function(ctx) {
-			var center = this.position.round();
+			var center = this.body.position.round();
 			ctx.save();
 				ctx.fillStyle = "#A5A";
 				ctx.beginPath();
@@ -21,7 +21,7 @@ define(function() {
 		},
 
 		update: function(dt) {
-			this.position = this.position.add(this.direction.scale(dt * this.speed));
+			this.body.update(dt);
 		}
 	};
 

@@ -22,7 +22,7 @@ define(function(require) {
 
 	// Follow player
 	function update(dt, player) {
-		position = position.moveTowards(player.position, smoothing * dt);
+		position = position.moveTowards(player.body.position, smoothing * dt);
 		shift = position.subtract(canvasOffset); // shift vector
 	}
 
