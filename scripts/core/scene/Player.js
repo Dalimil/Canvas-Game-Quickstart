@@ -14,6 +14,7 @@ define(function(require) {
 		this.turnSpeed = 3.2; // Turn/Rotation speed per second
 		this.gun = new Gun(this);
 		this.controls = { up: ['UP', 'W'], down: ['DOWN', 'S'], left: ['LEFT', 'A'], right: ['RIGHT', 'D'] };
+		this.activePowerups = [];
 	}
 
 	Player.prototype = {
@@ -27,6 +28,16 @@ define(function(require) {
 
 			// Shoot
 			this.gun.update(dt);
+
+			// Update Active PowerUps
+			for(var i = activePowerups.length - 1; i >= 0; i--) {
+				var powerup = activePowerups[i];
+				powerup.timeout -= dt;
+				if(powerup.timeout <= 0) {
+					// Remove
+					activePowerups.splice(i, 1);
+				}
+			};
 		},
 
 		render: function(ctx) {

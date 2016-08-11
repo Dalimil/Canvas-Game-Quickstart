@@ -5,7 +5,6 @@
 ## TODO
 - [ ] Implement physics engine, incl. collisions and resolution; Maybe create generic Body object with gravity and friction
 - [ ] Light module - directional, ambient, ... Use illuminated.js
-- [ ] Power-up (triggers) module - onTrigger() interface for gameObjects
 - [ ] HUD module - with health, mana, sound switch and main-menu link
 - [ ] Implement game rounds in GameManager
 - [ ] Add Require.js optimization tutorial

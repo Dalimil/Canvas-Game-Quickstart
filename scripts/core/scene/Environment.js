@@ -4,6 +4,7 @@ define(function(require) {
 
 	var Vector2 = require("maths/Vector2");
 	var Camera = require("scene/Camera");
+	var PowerUp = require("scene/PowerUp");
 	
 	// World representation
 	var gameObjects = []; // particles, power-ups etc.
@@ -23,6 +24,9 @@ define(function(require) {
 	function init(width, height) {
 		canvasHeight = height;
 		canvasWidth = width;
+		registerGameObject(new PowerUp(PowerUp.TYPE_SPEED_BOOST, Vector2(50, 100)));
+		registerGameObject(new PowerUp(PowerUp.TYPE_SPEED_BOOST, Vector2(300, 200)));
+		registerGameObject(new PowerUp(PowerUp.TYPE_SLOW_DOWN, Vector2(400, 50)));
 	}
 
 	function registerGameObject(obj) {
