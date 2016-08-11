@@ -28,12 +28,12 @@ define(function(require) {
 			this.gun.update(dt);
 
 			// Update Active PowerUps
-			for(var i = activePowerups.length - 1; i >= 0; i--) {
-				var powerup = activePowerups[i];
+			for(var i = this.activePowerups.length - 1; i >= 0; i--) {
+				var powerup = this.activePowerups[i];
 				powerup.timeout -= dt;
 				if(powerup.timeout <= 0) {
 					// Remove
-					activePowerups.splice(i, 1);
+					this.activePowerups.splice(i, 1);
 				}
 			};
 		},

@@ -27,6 +27,7 @@ define(function(require) {
 		},
 
 		update: function(dt, multiplier) {
+			multiplier = (multiplier === undefined) ? 1 : multiplier;
 			var velocity = this.direction.scale(this.speed * multiplier);
 			this.position = this.position.add(velocity.scale(dt));
 		}

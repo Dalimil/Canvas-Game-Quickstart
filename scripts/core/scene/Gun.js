@@ -23,7 +23,8 @@ define(function(require) {
 		},
 
 		shoot: function() {
-			var bullet = new Bullet(this.owner.body.position, this.getShootingDirection());
+			var bullet = new Bullet(this.owner.body.position.clone(),
+				this.getShootingDirection());
 			bullet.spawn();
 		},
 

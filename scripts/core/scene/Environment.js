@@ -24,9 +24,10 @@ define(function(require) {
 	function init(width, height) {
 		canvasHeight = height;
 		canvasWidth = width;
-		registerGameObject(new PowerUp(PowerUp.TYPE_SPEED_BOOST, Vector2(50, 100)));
-		registerGameObject(new PowerUp(PowerUp.TYPE_SPEED_BOOST, Vector2(300, 200)));
-		registerGameObject(new PowerUp(PowerUp.TYPE_SLOW_DOWN, Vector2(400, 50)));
+		registerGameObject(new PowerUp(PowerUp.TYPE_SPEED_BOOST, Vector2(300, 470)));
+		registerGameObject(new PowerUp(PowerUp.TYPE_SPEED_BOOST, Vector2(700, 400)));
+		registerGameObject(new PowerUp(PowerUp.TYPE_SLOw_DOWN, Vector2(300, 200)));
+		registerGameObject(new PowerUp(PowerUp.TYPE_SLOw_DOWN, Vector2(500, 50)));
 	}
 
 	function registerGameObject(obj) {
