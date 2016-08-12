@@ -4,7 +4,7 @@ define(function(require) {
 
 	var Vector2 = require("maths/Vector2");
 	var Camera = require("scene/Camera");
-	var PowerUp = require("scene/PowerUp");
+	var PowerUp = require("scene/object/PowerUp");
 	
 	// World representation
 	var gameObjects = []; // particles, power-ups etc.

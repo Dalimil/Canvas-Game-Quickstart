@@ -5,13 +5,13 @@ define(function(require) {
 	var Vector2 = require("maths/Vector2");
 	var GameInput = require("app/GameInput");
 	var Body = require("maths/Body");
-	var Gun = require("scene/Gun");
+	var Gun = require("scene/object/Gun");
 	
 	function Player(position) {
 		this.body = new Body(position, Vector2.RIGHT(), 180); // speed = 180 pix per sec
 		this.body.turnSpeed = 3.2; // Turn/Rotation speed per second
 		this.health = 100;
-		this.gun = new Gun(this);
+		this.gun = new Gun(this, Gun.INTERVAL_FAST);
 		this.controls = { up: ['UP', 'W'], down: ['DOWN', 'S'], left: ['LEFT', 'A'], right: ['RIGHT', 'D'] };
 		this.activePowerups = [];
 	}
@@ -54,6 +54,18 @@ define(function(require) {
 				
 				this.gun.render(ctx, 14);
 			ctx.restore();
+		},
+
+		/** Gun interface */
+		isShooting: function() {
+			return GameInput.isMouseDown()[0];
+		},
+
+		/** Gun interface */
+		getShootingDirection: function() {
+			var mouseCoords = GameInput.getMouseCoords();
+			var direction = mouseCoords.subtract(this.body.position);
+			return direction.normalize();
 		},
 
 		getMovementDirection: function() {

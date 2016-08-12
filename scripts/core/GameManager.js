@@ -23,6 +23,7 @@ define(function(require) {
 		var position = Vector2(120, 200);
 		player = new Player(position.clone());
 		Camera.init(position.clone());
+		EnemyManager.init(player);
 		Environment.init(width, height);
 	}
 

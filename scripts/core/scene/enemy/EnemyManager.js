@@ -16,6 +16,13 @@ define(function(require) {
 	var spawnTimer = 0;
 	var spawnPeriod = 1.5;
 
+	// Reference to the player (know whom to chase)
+	var player = null;
+
+	function init(_player) {
+		player = _player;
+	}
+
 	function render(ctx) {
 		spawnPoints.forEach(function(point) {
 			var center = point.round();
@@ -46,11 +53,12 @@ define(function(require) {
 		var randIndex = Random.randomInt(0, spawnPoints.length - 1);
 		var spawnPoint = spawnPoints[randIndex];
 		var randAngle = Random.randomAngle();
-		var enemy = new Enemy(spawnPoint.clone(), Vector2.fromPolar(randAngle, 1));
+		var enemy = new Enemy(spawnPoint.clone(), Vector2.fromPolar(randAngle, 1), player);
 		enemies.push(enemy);
 	}
 
 	return {
+		init: init,
 		render: render,
 		update: update
 	};
