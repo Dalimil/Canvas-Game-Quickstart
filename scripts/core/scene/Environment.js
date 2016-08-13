@@ -24,10 +24,20 @@ define(function(require) {
 	function init(width, height) {
 		canvasHeight = height;
 		canvasWidth = width;
+		initializePowerUps();
+	}
+
+	function initializePowerUps() {
 		registerGameObject(new PowerUp(PowerUp.TYPE_SPEED_BOOST, Vector2(300, 470)));
 		registerGameObject(new PowerUp(PowerUp.TYPE_SPEED_BOOST, Vector2(700, 400)));
 		registerGameObject(new PowerUp(PowerUp.TYPE_SLOw_DOWN, Vector2(300, 200)));
 		registerGameObject(new PowerUp(PowerUp.TYPE_SLOw_DOWN, Vector2(500, 50)));
+	}
+
+	function onNextRound(num) {
+		// Reset
+		gameObjects = [];
+		initializePowerUps();
 	}
 
 	function registerGameObject(obj) {
@@ -73,6 +83,7 @@ define(function(require) {
 
 	return {
 		init: init,
+		onNextRound: onNextRound,
 		registerGameObject: registerGameObject,
 		update: update,
 		render: render

@@ -23,6 +23,11 @@ define(function(require) {
 		player = _player;
 	}
 
+	function onNextRound(num) {
+		enemies = [];
+		spawnPeriod = Math.max(0.5, spawnPeriod - 0.1);
+	}
+
 	function render(ctx) {
 		spawnPoints.forEach(function(point) {
 			var center = point.round();
@@ -59,6 +64,7 @@ define(function(require) {
 
 	return {
 		init: init,
+		onNextRound: onNextRound,
 		render: render,
 		update: update
 	};

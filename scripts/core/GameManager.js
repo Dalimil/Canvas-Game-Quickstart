@@ -9,7 +9,8 @@ define(function(require) {
 	var GameInput = require("app/GameInput");
 	var Utils = require("app/Utils");
 	var Vector2 = require("maths/Vector2");
-	
+	var GameRoundManager = require("app/GameRoundManager");
+
 	var width;
 	var height;
 	var ctx;
@@ -27,8 +28,15 @@ define(function(require) {
 		Environment.init(width, height);
 	}
 
+	// Game enters next round
+	function onNextRound(num) {
+		Environment.onNextRound(num);
+		EnemyManager.onNextRound(num);
+	}
+
 	// Update game objects.
 	function update(dt) { // dt = time passed since last redraw
+		GameRoundManager.update(dt);
 		EnemyManager.update(dt);
 		player.update(dt);
 		Environment.update(dt);
