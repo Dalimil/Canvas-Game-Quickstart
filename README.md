@@ -6,7 +6,6 @@
 - [ ] Implement physics engine, incl. collisions and resolution
 - [ ] Light module - directional, ambient, ... Use illuminated.js
 - [ ] HUD module - with health, mana, sound switch and main-menu link
-- [ ] Implement game rounds in GameManager
 - [ ] init npm + websockets and multiplayer? - or fork into a different repo (e.g. pure multiplayer game skeleton)
 
 ## JavaScript Optimization
