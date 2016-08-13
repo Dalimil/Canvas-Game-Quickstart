@@ -29,7 +29,12 @@ canvas {
 }
 
 #glasspane > div {
-	display: none; /* Hide all by default */
+	/* Hide all main panels by default */
+	display: none; 
+
+	/* Fill space */
+	width: 100%;
+	height: 100%;
 }
 
 #glasspane .centered {
@@ -40,33 +45,56 @@ canvas {
 }
 
 #glasspane .splash-cover {
-	width: 100%;
-	height: 100%;
 	background-size: cover;
 	background-repeat: no-repeat;
 }
 
-#menu-wrapper {
-	background: url("../images/menu-splash.jpg"); 
-	/* TODO: this one (unlike the load-wrapper) should be preloaded in code */
-}
+/* LOADER */
 
-#load-wrapper {
-	background: url("../images/load-splash.png");
-}
+	#load-wrapper {
+		background: url("../images/load-splash.png");
+	}
 
-#progress-bar-wrapper {
-	width: 50%;
-	height: 25px;
-	border: 1px solid black;
-}
+	#progress-bar-wrapper {
+		width: 50%;
+		height: 25px;
+		border: 1px solid black;
+	}
 
-#menu {
-	text-align: center;
-	color: #FFF;
-	width: 30%;
-}
+/* MENU */
 
-#menu > button {
-	margin-top: 10px;
-}
+	#menu-wrapper {
+		background: url("../images/menu-splash.jpg"); 
+		/* TODO: this one (unlike the load-wrapper) should be preloaded in code */
+	}
+
+	#menu {
+		text-align: center;
+		color: #FFF;
+		width: 30%;
+	}
+
+	#menu > button {
+		margin-top: 10px;
+	}
+
+/* HUD */
+
+	.hud-row {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		padding: 0.5em 1em 0.5em;
+		background-color: skyblue; /* todo: remove - debug */
+	}
+
+	#hud-top {
+		font-size: 1.5em;
+		font-weight: bold;
+	}
+
+	#hud-bot {
+		position: absolute;
+		width: 100%;
+		bottom: 0;
+	}

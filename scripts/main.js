@@ -14,5 +14,5 @@ requirejs.config({
 
 // Start the main app logic.
 requirejs(['app/AppManager'], function(app) {
-	app.init();
+	app.AppManager.init();
 });

@@ -69,7 +69,7 @@ define(function (require, exports, module) {
 		GameManager.render();
 	}
 
-	return {
+	exports.AppManager = {
 		init: init,
 		pause: pause,
 		resume: resume,

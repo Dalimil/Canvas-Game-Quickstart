@@ -10,6 +10,7 @@ define(function(require) {
 	var Utils = require("app/Utils");
 	var Vector2 = require("maths/Vector2");
 	var GameRoundManager = require("app/GameRoundManager");
+	var HUD = require("app/HUD");
 
 	var width;
 	var height;
@@ -26,6 +27,8 @@ define(function(require) {
 		Camera.init(position.clone());
 		EnemyManager.init(player);
 		Environment.init(width, height);
+		HUD.init();
+		GameRoundManager.init(onNextRound);
 	}
 
 	// Game enters next round
@@ -36,15 +39,19 @@ define(function(require) {
 
 	// Update game objects.
 	function update(dt) { // dt = time passed since last redraw
-		GameRoundManager.update(dt);
-		EnemyManager.update(dt);
-		player.update(dt);
-		Environment.update(dt);
-		Camera.update(dt, player);
+		var ready = GameRoundManager.update(dt);
+		// New round transition may pause the game
+		if (ready) {
+			EnemyManager.update(dt);
+			player.update(dt);
+			Environment.update(dt);
+			Camera.update(dt, player);
+		}
 	}
 
 	// Draw everything
 	function render() {
+		HUD.render();
 		// Clear canvas
 		ctx.clearRect(0, 0, width, height);
 		ctx.save(); // save to reset state at the end
