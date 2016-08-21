@@ -4,110 +4,85 @@ define(function(require) {
 
 	var AssetLoader = require("app/AssetLoader");
 
-	var audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+	var AudioCtx = new (window.AudioContext || window.webkitAudioContext)();
 
-	/* Array entries will be replaced by audio buffers after load() */
-	var audioBuffers = [
-		'ambient-menu.ogg',
-		'gunshot.wav'
-	];
-	var filePrefix = 'audio/';
+	function Audio(filename, volume, loop) {
+		this.filename = Audio.FILE_PREFIX + filename;
+		this.source = null;
+		this.volume = volume;
+		this.loop = loop || false;
+		this.gain = AudioCtx.createGain();
+		this.gain.value = this.volume; // Set volume levels -> [0, 1] - 0 is mute
 
-	var sourceAmbient = null;
-	var sourceGunshot = null;
+		this.initSource = function(buffer) {
+			this.source = AudioCtx.createBufferSource();
+			this.source.buffer = buffer;
+			this.source.loop = this.loop;
+			this.source.connect(this.gain);
+			this.gain.connect(AudioCtx.destination);
+		};
 
-	var volumeEffects = 0.9;
-	var volumeAmbient = 0.7;
+		this.loadBuffer = function(callback) {
+			var request = new XMLHttpRequest();
+			request.open('GET', this.filename, true);
+			request.responseType = 'arraybuffer';
+			var self = this;
 
-	var gainEffects = audioCtx.createGain();
-	var gainAmbient = audioCtx.createGain();
+			request.onload = function() {
+				AudioCtx.decodeAudioData(request.response, function(buffer) {
+					self.initSource(buffer);
+					callback();
+				}, function(error) { 
+					console.error("Audio data decoding error", error); 
+					callback();
+				});
+			};
+			request.send();
+		};
 
-	// Set volume levels -> [0, 1] - 0 is mute
-	gainAmbient.gain.value = volumeAmbient; 
-	gainEffects.gain.value = volumeEffects;
+		this.play = function() {
+			var currentTime = AudioCtx.currentTime;
+			//gainAmbient.gain.setValueAtTime(0, currentTime + 1);
+			this.source.start(currentTime + 1); // start(when, offset, duration)
+			// Fade-in volume - todo - fix
+			//gainAmbient.gain.exponentialRampToValueAtTime(volumeAmbient, currentTime + 4);
+		};
+
+		this.stop = function() {
+			this.source.stop();
+		};
+	}
+
+	Audio.FILE_PREFIX = 'audio/';
+
+	var audioBuffers = {
+		"menu": new Audio('ambient-menu-playful.ogg', 0.7, true),
+		"gunshot": new Audio('effects/gunshot.wav', 0.8)
+	};
 
 	function init() {
 		// Register our load function
-		AssetLoader.addLoadFunction(load);
+		AssetLoader.addLoadFunction(load, Object.keys(audioBuffers).length);
 	}
 
-	function initSources() {
-		sourceAmbient = audioCtx.createBufferSource();
-		sourceAmbient.buffer = audioBuffers[0];
-		sourceAmbient.loop = true;
-		sourceAmbient.connect(gainAmbient);
-		gainAmbient.connect(audioCtx.destination);
-
-		sourceGunshot = audioCtx.createBufferSource();
-		sourceGunshot.buffer = audioBuffers[1];
-		sourceGunshot.connect(gainEffects);
-		gainEffects.connect(audioCtx.destination);
-	}
-
-	// To be initialized in load()
-	var singleBufferLoaded = function(fDone, fTick) {
-		var totalPieces = audioBuffers.length;
-		var numToLoad = totalPieces;
-
-		function self() {
-			numToLoad -= 1;
-			fTick(totalPieces);
-
-			if(numToLoad <= 0) { // All loaded
-				initSources();
-				fDone();
-			}
-		};
-
-		return self;
-	};
-
-	function load(fDone, fTick) {
-		singleBufferLoaded = singleBufferLoaded(fDone, fTick);
-
-		$.each(audioBuffers, function(index, value) {
-			loadBuffer(filePrefix + value, index);
+	function load(tickCallback) {
+		Object.keys(audioBuffers).forEach(function(key) {
+			audioBuffers[key].loadBuffer(tickCallback);
 		});
 	}
 
-	function loadBuffer(url, index) {
-		var request = new XMLHttpRequest();
-		request.open('GET', url, true);
-		request.responseType = 'arraybuffer';
-
-		request.onload = function() {
-			audioCtx.decodeAudioData(request.response, function(buffer) {
-				audioBuffers[index] = buffer;
-				singleBufferLoaded();
-			}, function(error) { 
-				console.error("Audio data decoding error", error); 
-			});
-		};
-
-		request.send();
+	function play(audioKey) {
+		audioBuffers[audioKey].play();
 	}
 
-	function playAmbient() {
-		var currentTime = audioCtx.currentTime;
-		//gainAmbient.gain.setValueAtTime(0, currentTime + 1);
-		sourceAmbient.start(currentTime + 1); // start(when, offset, duration)
-		// Fade-in volume - todo - fix
-		//gainAmbient.gain.exponentialRampToValueAtTime(volumeAmbient, currentTime + 4);
-	}
-
-	function stopAmbient() {
-		sourceAmbient.stop();
-	}
-
-	function playGunshot() {
-		sourceGunshot.start();
+	function stop(audioKey) {
+		audioBuffers[audioKey].stop();
 	}
 
 	return {
 		init: init,
-		playAmbient: playAmbient,
-		stopAmbient: stopAmbient,
-		playGunshot: playGunshot
+		play: play,
+		stop: stop
 	};
 
 });

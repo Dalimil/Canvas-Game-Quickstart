@@ -5,6 +5,7 @@ define(function(require) {
 	var Vector2 = require("maths/Vector2");
 	var GameInput = require("app/GameInput");
 	var Bullet = require("scene/object/Bullet");
+	var AudioManager = require("app/AudioManager");
 
 	function Gun(owner, fireInterval) {
 		this.owner = owner;
@@ -29,6 +30,8 @@ define(function(require) {
 			var bullet = new Bullet(this.owner.body.position.clone(),
 				this.owner.getShootingDirection());
 			bullet.spawn();
+
+			// AudioManager.play("gunshot");
 		},
 
 		render: function(ctx, distance) {

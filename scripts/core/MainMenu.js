@@ -2,6 +2,8 @@
 
 define(function(require) {
 	
+	var AudioManager = require("app/AudioManager");
+
 	var $menuScreen = null;
 
 	function init(clickPlayCallback) {
@@ -22,16 +24,16 @@ define(function(require) {
 		$leaderboardButton.click(function() {
 			console.log("Swap menu screen here"); // todo
 		});
-
-		// TODO - uncomment - AudioManager.playAmbient();
 	}
 
 	function show() {
 		$menuScreen.fadeIn("slow");
+		AudioManager.play("menu");
 	}
 
 	function hide() {
 		$menuScreen.fadeOut();
+		AudioManager.stop("menu");
 	}
 
 	return {

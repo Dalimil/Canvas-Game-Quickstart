@@ -10,11 +10,15 @@ define(function() {
 	var $loadingScreen = null;
 	var $progressBar = null;
 
-	function addLoadFunction(func) {
+	function addLoadFunction(loadFunc, piecesToLoad) {
 		if(loaded) return;
 		
-		// func should take 2 callbacks for done() and tick()
-		loadComponents.push({ f: func });
+		// func should take a tick() callback
+		loadComponents.push({
+			load: loadFunc,
+			piecesToLoad: piecesToLoad,
+			totalPieces: piecesToLoad
+		});
 	}
 
 	function setBarProgress(value) {
@@ -55,13 +59,15 @@ define(function() {
 
 		// Fire loaders of all and start collecting (via callbacks)
 		loadComponents.forEach(function(component) {
-			component.f(function() { // done()
-				numComponentsToLoad -= 1;
-				if(numComponentsToLoad <= 0) {
-					finishLoading();
+			component.load(function() { // tick()
+				component.piecesToLoad -= 1;
+				increaseBarProgress(portion / component.totalPieces);
+				if(component.piecesToLoad <= 0) {
+					numComponentsToLoad -= 1;
+					if(numComponentsToLoad <= 0) {
+						finishLoading();
+					}
 				}
-			}, function(piecesTotal) { // tick()
-				increaseBarProgress(portion / piecesTotal);
 			});
 		});
 	}
