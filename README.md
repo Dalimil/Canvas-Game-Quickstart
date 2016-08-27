@@ -4,10 +4,9 @@
 
 ## TODO
 - [ ] Implement physics engine, incl. collisions and resolution
-- [ ] Light module - directional, ambient, ... Use illuminated.js
-- [ ] Implement Particle system (+ with custom image assets)
 - [ ] HUD module - with health, mana, sound switch and main-menu link
-- [ ] init npm + websockets and multiplayer? - or fork into a different repo (e.g. pure multiplayer game skeleton)
+- [ ] Light module - directional, ambient, ... -> Use https://github.com/gre/illuminated.js/
+- [ ] Implement Particle system (+ with custom image assets) -> inspiration: http://www.mrspeaker.net/dev/parcycle/ (see radial gradient render code)
 
 ## JavaScript Optimization
 To optimize, run:
