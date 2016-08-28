@@ -11,7 +11,7 @@ define(function(require) {
 		this.body = new Body(position, Vector2.RIGHT(), 180); // speed = 180 pix per sec
 		this.body.turnSpeed = 3.2; // Turn/Rotation speed per second
 		this.health = 100;
-		this.gun = new Gun(this, Gun.INTERVAL_FAST);
+		this.gun = new Gun(this, Gun.INTERVAL_FAST, "gunshot");
 		this.controls = { up: ['UP', 'W'], down: ['DOWN', 'S'], left: ['LEFT', 'A'], right: ['RIGHT', 'D'] };
 		this.activePowerups = [];
 	}

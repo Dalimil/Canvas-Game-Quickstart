@@ -31,13 +31,13 @@ define(function (require, exports, module) {
 			MainMenu.hide();
 			resume();
 		});
-		/*
+		//*
 		AssetLoader.init(function() { 
 			// Callback when Loaded
 			loaded = true;
 			MainMenu.show(); 
 		});//*/
-			//* start debug  /////////////////////
+			/* start debug  /////////////////////
 				loaded = true;
 				resume(); // todo - remove - skip main-menu hack
 			// end debug /////////////////////////*/

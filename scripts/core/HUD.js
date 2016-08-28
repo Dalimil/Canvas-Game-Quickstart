@@ -7,6 +7,7 @@ define(function (require) {
 
 	var GameRoundManager = require("app/GameRoundManager");
 	var AppManager = require("app/AppManager"); // Careful: it's circular
+	var AudioManager = require("app/AudioManager");
 
 	var $hudScreen = null;
 	var $roundNumberField = null;
@@ -19,6 +20,16 @@ define(function (require) {
 
 		$("#pause-btn").click(function() {
 			AppManager.AppManager.pause();
+		});
+
+		$("#mute-btn").click(function() {
+			if(AudioManager.isMuted()) {
+				AudioManager.unmute();
+				$(this).children().removeClass("glyphicon-volume-off").addClass("glyphicon-volume-up");
+			} else {
+				AudioManager.mute();
+				$(this).children().removeClass("glyphicon-volume-up").addClass("glyphicon-volume-off");
+			}
 		});
 
 		show();

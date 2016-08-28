@@ -7,8 +7,9 @@ define(function(require) {
 	var Bullet = require("scene/object/Bullet");
 	var AudioManager = require("app/AudioManager");
 
-	function Gun(owner, fireInterval) {
+	function Gun(owner, fireInterval, audioKey) {
 		this.owner = owner;
+		this.audio = audioKey || null;
 		this.gunTimer = 0;
 		this.FIRE_INTERVAL = fireInterval || Gun.INTERVAL_SLOW;
 	}
@@ -31,7 +32,9 @@ define(function(require) {
 				this.owner.getShootingDirection());
 			bullet.spawn();
 
-			// AudioManager.play("gunshot");
+			if(this.audio) {
+				AudioManager.play("gunshot");
+			}
 		},
 
 		render: function(ctx, distance) {

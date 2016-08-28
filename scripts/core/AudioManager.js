@@ -6,20 +6,27 @@ define(function(require) {
 
 	var AudioCtx = new (window.AudioContext || window.webkitAudioContext)();
 
+	// Later connect everything to our masterVolume gain node
+	var masterVolume = AudioCtx.createGain();
+	masterVolume.gain.value = 1.0;
+	masterVolume.connect(AudioCtx.destination); 
+
 	function Audio(filename, volume, loop) {
 		this.filename = Audio.FILE_PREFIX + filename;
 		this.source = null;
+		this.buffer = null;
 		this.volume = volume;
 		this.loop = loop || false;
 		this.gain = AudioCtx.createGain();
-		this.gain.value = this.volume; // Set volume levels -> [0, 1] - 0 is mute
+		this.gain.gain.value = this.volume; // Set volume levels -> [0, 1] - 0 is mute
 
-		this.initSource = function(buffer) {
+		this.initSource = function() {
+			// Assumes we already have a buffer loaded
 			this.source = AudioCtx.createBufferSource();
-			this.source.buffer = buffer;
+			this.source.buffer = this.buffer;
 			this.source.loop = this.loop;
 			this.source.connect(this.gain);
-			this.gain.connect(AudioCtx.destination);
+			this.gain.connect(masterVolume);
 		};
 
 		this.loadBuffer = function(callback) {
@@ -30,7 +37,7 @@ define(function(require) {
 
 			request.onload = function() {
 				AudioCtx.decodeAudioData(request.response, function(buffer) {
-					self.initSource(buffer);
+					self.buffer = buffer;
 					callback();
 				}, function(error) { 
 					console.error("Audio data decoding error", error); 
@@ -41,10 +48,11 @@ define(function(require) {
 		};
 
 		this.play = function() {
+			this.initSource();
 			var currentTime = AudioCtx.currentTime;
-			//gainAmbient.gain.setValueAtTime(0, currentTime + 1);
-			this.source.start(currentTime + 1); // start(when, offset, duration)
+			this.source.start(); // start(when, offset, duration)
 			// Fade-in volume - todo - fix
+			//gainAmbient.gain.setValueAtTime(0, currentTime + 1);
 			//gainAmbient.gain.exponentialRampToValueAtTime(volumeAmbient, currentTime + 4);
 		};
 
@@ -57,7 +65,7 @@ define(function(require) {
 
 	var audioBuffers = {
 		"menu": new Audio('ambient-menu-playful.ogg', 0.7, true),
-		"gunshot": new Audio('effects/gunshot.wav', 0.8)
+		"gunshot": new Audio('effects/gunshot.wav', 0.3)
 	};
 
 	function init() {
@@ -79,10 +87,29 @@ define(function(require) {
 		audioBuffers[audioKey].stop();
 	}
 
+	function setMasterVolume(value) {
+		masterVolume.gain.value = value;
+	}
+
+	function mute() {
+		setMasterVolume(0);
+	}
+
+	function unmute() {
+		setMasterVolume(1);
+	}
+
+	function isMuted() {
+		return masterVolume.gain.value == 0;
+	}
+
 	return {
 		init: init,
 		play: play,
-		stop: stop
+		stop: stop,
+		mute: mute,
+		unmute: unmute,
+		isMuted: isMuted
 	};
 
 });
