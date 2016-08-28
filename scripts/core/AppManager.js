@@ -11,6 +11,7 @@ define(function (require, exports, module) {
 	var AssetLoader = require("app/AssetLoader");
 	var MainMenu = require("app/MainMenu");
 	var Utils = require("app/Utils");
+	var HUD = require("app/HUD");
 
 	var loaded = false;
 	var running = false;
@@ -27,17 +28,18 @@ define(function (require, exports, module) {
 		GameManager.init($canvas[0]);
 		GameInput.init($canvas);
 		AudioManager.init();
+		HUD.init(pause);
 		MainMenu.init(function() {
 			MainMenu.hide();
 			resume();
 		});
-		//*
+		/*
 		AssetLoader.init(function() { 
 			// Callback when Loaded
 			loaded = true;
 			MainMenu.show(); 
 		});//*/
-			/* start debug  /////////////////////
+			//* start debug  /////////////////////
 				loaded = true;
 				resume(); // todo - remove - skip main-menu hack
 			// end debug /////////////////////////*/
@@ -45,6 +47,8 @@ define(function (require, exports, module) {
 
 	function pause() {
 		running = false;
+		HUD.hide();
+		MainMenu.show();
 	}
 
 	function resume() {
@@ -52,6 +56,7 @@ define(function (require, exports, module) {
 			running = true;
 			lastTimestamp = performance.now();
 			requestAnimFrame(main);
+			HUD.show();
 		}
 	}
 

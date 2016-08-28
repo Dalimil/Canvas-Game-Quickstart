@@ -4,7 +4,6 @@
 
 ## TODO
 - [ ] Implement physics engine, incl. collisions and resolution
-- [ ] HUD module - with health, mana, sound switch and main-menu link
 - [ ] Light module - directional, ambient, ... -> Use https://github.com/gre/illuminated.js/
 - [ ] Implement Particle system (+ with custom image assets) -> inspiration: http://www.mrspeaker.net/dev/parcycle/ (see radial gradient render code)
 

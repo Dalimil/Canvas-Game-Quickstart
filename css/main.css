@@ -85,7 +85,6 @@ canvas {
 		justify-content: space-between;
 		align-items: center;
 		padding: 0.5em 1em 0.5em;
-		background-color: skyblue; /* todo: remove - debug */
 	}
 
 	#hud-top {
@@ -97,4 +96,29 @@ canvas {
 		position: absolute;
 		width: 100%;
 		bottom: 0;
+		margin-bottom: 1em;
+	}
+
+	.slider-bar {
+	  box-sizing: border-box;
+	  width: 220px;
+	  height: 25px;
+	  padding: 4px;
+	  border-radius: 5px;
+	  background: #333;
+	}
+
+	.inner-bar {
+	  height: 17px;
+	  transition: width .5s linear;
+	}
+
+	#health-bar {
+		width: 100%;
+		background-color: #D33;
+	}
+
+	#mana-bar {
+		width: 70%;
+		background-color: #33D;
 	}

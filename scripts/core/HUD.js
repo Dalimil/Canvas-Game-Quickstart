@@ -6,20 +6,23 @@
 define(function (require) {
 
 	var GameRoundManager = require("app/GameRoundManager");
-	var AppManager = require("app/AppManager"); // Careful: it's circular
 	var AudioManager = require("app/AudioManager");
 
 	var $hudScreen = null;
 	var $roundNumberField = null;
 	var $roundTimeoutField = null;
+	var $playerHealth = null;
+	var $playerMana = null;
 
-	function init() {
-		$hudScreen = $("#HUD-wrapper");
+	function init(onpause) {
+		$hudScreen = $("#hud-wrapper");
 		$roundNumberField = $("#hud-top-left");
 		$roundTimeoutField = $("#hud-top-middle");
+		$playerHealth = $("#health-bar");
+		$playerMana = $("#mana-bar");
 
 		$("#pause-btn").click(function() {
-			AppManager.AppManager.pause();
+			onpause();
 		});
 
 		$("#mute-btn").click(function() {
@@ -31,8 +34,6 @@ define(function (require) {
 				$(this).children().removeClass("glyphicon-volume-up").addClass("glyphicon-volume-off");
 			}
 		});
-
-		show();
 	}
 
 	function render() {
@@ -49,6 +50,14 @@ define(function (require) {
 		}
 	}
 
+	function setPlayerHealth(fraction) {
+		$playerHealth.css("width", fraction + "%");
+	}
+
+	function setPlayerMana(fraction) {
+		$playerMana.css("width", fraction + "%");
+	}
+
 	function show() {
 		$hudScreen.fadeIn();
 	}
@@ -61,7 +70,9 @@ define(function (require) {
 		init: init,
 		show: show,
 		hide: hide,
-		render: render
+		render: render,
+		setPlayerHealth: setPlayerHealth,
+		setPlayerMana: setPlayerMana
 	};
 
 });

@@ -27,7 +27,6 @@ define(function(require) {
 		Camera.init(position.clone());
 		EnemyManager.init(player);
 		Environment.init(width, height);
-		HUD.init();
 		GameRoundManager.init(onNextRound);
 	}
 
