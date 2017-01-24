@@ -3,13 +3,13 @@
 define(function(require) {
 
 	var Body = require("maths/Body");
-	// var Rectangle = require("maths/Rectangle");
+	var Rectangle = require("maths/Rectangle");
 	var Environment = require("scene/Environment");
-	//var Collisions = require("maths/Collisions");
+	var Collisions = require("maths/Collisions");
 
 	function Bullet(position, direction) {
 		this.body = new Body(position, direction, 400);
-		//this.body.setCollider(Rectangle(this.body.position, 2, 2));
+		this.body.setCollider(Rectangle(this.body.position, 2, 2));
 		this.spawned = false;
 	}
 
@@ -17,7 +17,7 @@ define(function(require) {
 		spawn: function() {
 			if(!this.spawned) {
 				Environment.registerGameObject(this); // bullet now exists + is rendered
-				//Collisions.registerGameObject(this.body.collider, this.onCollision);
+				Collisions.registerGameObject(this.body.collider, this.onCollision.bind(this));
 				this.spawned = true;
 			}
 		},
@@ -32,6 +32,7 @@ define(function(require) {
 			// Animator.createExplosion(collision);
 
 			// todo: properly delete
+			this.body.collider = null;
 			this.spawned = false;
 		},
 

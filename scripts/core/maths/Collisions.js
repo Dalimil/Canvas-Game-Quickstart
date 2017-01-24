@@ -7,7 +7,7 @@ define(function() {
 	function registerGameObject(collisionBox, onCollision) {
 		objects.push({ collider: collisionBox, onCollision: onCollision });
 	}
-/*
+
 	function areColliding(colliderA, colliderB) {
 		if (colliderA.x1 < colliderB.x2 && colliderA.x2 > colliderB.x1 &&
 			colliderA.y1 < colliderB.y2 && colliderA.y2 > colliderB.y1) {
@@ -15,17 +15,18 @@ define(function() {
 			return true;
 		} 
 		return null;
-	}*/
+	}
 
-	function update() {
+	function update(dt) {
 		// compute all collisions here
-	/*	objects.forEach(function(objectA) {
+		/*objects.forEach(function(objectA) {
 			objects.forEach(function(objectB) {
-				if (objectA == objectB) {
+				if (!objectA || !objectB || objectA == objectB) {
 					return;
 				}
 				var collision = areColliding(objectA.collider, objectB.collider);
 				if (collision != null) {
+					console.log("Collision now");
 					objectA.onCollision(collision);
 					objectB.onCollision(collision);
 				}

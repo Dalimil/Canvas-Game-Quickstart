@@ -6,6 +6,7 @@ define(function(require) {
 	var Environment = require("scene/Environment");
 	var Player = require("scene/Player");
 	var EnemyManager = require("scene/enemy/EnemyManager");
+	var Collisions = require("maths/Collisions");
 	var GameInput = require("app/GameInput");
 	var Utils = require("app/Utils");
 	var Vector2 = require("maths/Vector2");
@@ -45,6 +46,7 @@ define(function(require) {
 			player.update(dt);
 			Environment.update(dt);
 			Camera.update(dt, player);
+			Collisions.update(dt);
 		}
 	}
 
