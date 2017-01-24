@@ -30,8 +30,8 @@ define(function(require) {
 	function initializePowerUps() {
 		registerGameObject(new PowerUp(PowerUp.TYPE_SPEED_BOOST, Vector2(300, 470)));
 		registerGameObject(new PowerUp(PowerUp.TYPE_SPEED_BOOST, Vector2(700, 400)));
-		registerGameObject(new PowerUp(PowerUp.TYPE_SLOw_DOWN, Vector2(300, 200)));
-		registerGameObject(new PowerUp(PowerUp.TYPE_SLOw_DOWN, Vector2(500, 50)));
+		registerGameObject(new PowerUp(PowerUp.TYPE_SLOW_DOWN, Vector2(300, 200)));
+		registerGameObject(new PowerUp(PowerUp.TYPE_SLOW_DOWN, Vector2(500, 50)));
 	}
 
 	function onNextRound(num) {

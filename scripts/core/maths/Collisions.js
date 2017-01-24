@@ -5,12 +5,32 @@ define(function() {
 	var objects = [];
 
 	function registerGameObject(collisionBox, onCollision) {
-		objects.push({ box: collisionBox, onCollision: onCollision });
+		objects.push({ collider: collisionBox, onCollision: onCollision });
 	}
+/*
+	function areColliding(colliderA, colliderB) {
+		if (colliderA.x1 < colliderB.x2 && colliderA.x2 > colliderB.x1 &&
+			colliderA.y1 < colliderB.y2 && colliderA.y2 > colliderB.y1) {
+			// todo: return collision details instead
+			return true;
+		} 
+		return null;
+	}*/
 
 	function update() {
 		// compute all collisions here
-		
+	/*	objects.forEach(function(objectA) {
+			objects.forEach(function(objectB) {
+				if (objectA == objectB) {
+					return;
+				}
+				var collision = areColliding(objectA.collider, objectB.collider);
+				if (collision != null) {
+					objectA.onCollision(collision);
+					objectB.onCollision(collision);
+				}
+			});
+		});*/
 	}
 
 	return {

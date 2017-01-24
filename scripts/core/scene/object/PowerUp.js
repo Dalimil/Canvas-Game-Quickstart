@@ -8,7 +8,7 @@ define(function(require) {
 	}
 
 	PowerUp.TYPE_SPEED_BOOST = "type-fast";
-	PowerUp.TYPE_SLOw_DOWN = "type-slow";
+	PowerUp.TYPE_SLOW_DOWN = "type-slow";
 	PowerUp.SPEED_BOOST = 100;
 	PowerUp.SPEED_POWERUP_DURATION = 2000;
 
@@ -20,7 +20,7 @@ define(function(require) {
 					PowerUp.SPEED_POWERUP_DURATION,
 					function() { player.body.speed -= PowerUp.SPEED_BOOST; })
 				);
-			} else if(this.type == PowerUp.TYPE_SLOw_DOWN) {
+			} else if(this.type == PowerUp.TYPE_SLOW_DOWN) {
 				player.body.speed -= PowerUp.SPEED_BOOST;
 				player.activePowerups.push(new ActivePowerUp(
 					PowerUp.SPEED_POWERUP_DURATION,

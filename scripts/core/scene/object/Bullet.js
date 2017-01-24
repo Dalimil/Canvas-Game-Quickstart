@@ -3,10 +3,13 @@
 define(function(require) {
 
 	var Body = require("maths/Body");
+	// var Rectangle = require("maths/Rectangle");
 	var Environment = require("scene/Environment");
+	//var Collisions = require("maths/Collisions");
 
 	function Bullet(position, direction) {
 		this.body = new Body(position, direction, 400);
+		//this.body.setCollider(Rectangle(this.body.position, 2, 2));
 		this.spawned = false;
 	}
 
@@ -14,7 +17,7 @@ define(function(require) {
 		spawn: function() {
 			if(!this.spawned) {
 				Environment.registerGameObject(this); // bullet now exists + is rendered
-				//Collisions.registerGameObject(this); // collision events
+				//Collisions.registerGameObject(this.body.collider, this.onCollision);
 				this.spawned = true;
 			}
 		},
@@ -25,10 +28,11 @@ define(function(require) {
 			}
 		},
 
-		onCollision: function(other, collision) {
+		onCollision: function(collision) {
 			// Animator.createExplosion(collision);
 
-			// TODO: destroy bullet
+			// todo: properly delete
+			this.spawned = false;
 		},
 
 		render: function(ctx) {
